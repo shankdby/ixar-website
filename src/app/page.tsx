@@ -2,14 +2,68 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, ShieldCheck, CheckCircle, Award, Plug, Boxes, Wrench, Waves, Search, Activity, Compass, Eye, Zap, Cpu, Settings, Gauge } from "lucide-react";
-import { products } from "@/data/products";
-import { industries } from "@/data/industries";
-import { caseStudies } from "@/data/caseStudies";
-import { HeroCarousel } from "@/components/HeroCarousel";
+import { motion, AnimatePresence } from "framer-motion";
+import { Award, CheckCircle, Search, Waves, Zap, Cpu, Settings, Gauge, ChevronLeft, ChevronRight } from "lucide-react";
 
-
+// 4 Hero Slides with sliding images, positions, colors and taglines
+const heroSlides = [
+  {
+    id: 0,
+    image: "/media/hero-slide-1.jpg",
+    heading: "IXAR Robotic Solutions",
+    subheading: "Engineering the Future of Underwater Inspection",
+    position: "top-left",
+    align: "left" as const,
+    textColor: "#0f172a", // Dark slate-900 / black
+    badgeColor: "bg-slate-900/85 text-cyan-300 border-cyan-400/50",
+    top: "14%",
+    left: "6%",
+    right: "auto",
+    textAlign: "left" as const,
+  },
+  {
+    id: 1,
+    image: "/media/hero-slide-2.jpg",
+    heading: "IXAR Robotic Solutions",
+    subheading: "Innovating Underwater Robotics for Safer Inspections",
+    position: "bottom-left",
+    align: "left" as const,
+    textColor: "#ffffff", // Crisp white
+    badgeColor: "bg-black/75 text-cyan-300 border-cyan-400/50",
+    top: "54%",
+    left: "6%",
+    right: "auto",
+    textAlign: "left" as const,
+  },
+  {
+    id: 2,
+    image: "/media/hero-slide-3.jpg",
+    heading: "IXAR Robotic Solutions",
+    subheading: "Making Complex Underwater Missions Simple",
+    position: "top-right",
+    align: "right" as const,
+    textColor: "#0f172a", // Dark slate-900 / black
+    badgeColor: "bg-slate-900/85 text-cyan-300 border-cyan-400/50",
+    top: "14%",
+    left: "auto",
+    right: "6%",
+    textAlign: "right" as const,
+  },
+  {
+    id: 3,
+    image: "/media/hero-slide-4.jpg",
+    heading: "IXAR Robotic Solutions",
+    subheading: "Advanced Robotics for Critical Underwater Operations",
+    position: "top-right",
+    align: "right" as const,
+    textColor: "#0f172a", // Dark slate-900 / black
+    badgeColor: "bg-slate-900/85 text-cyan-300 border-cyan-400/50",
+    top: "14%",
+    left: "auto",
+    right: "6%",
+    textAlign: "right" as const,
+  }
+];
 
 const clientLogos = [
   { name: "Reliance Industries", src: "/images/logos/logo_1.png", url: "https://www.ril.com" },
@@ -23,7 +77,52 @@ const clientLogos = [
 ];
 
 export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState(products[0]);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [subheadingText, setSubheadingText] = useState(heroSlides[0].subheading);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const currentSlide = heroSlides[currentSlideIndex];
+
+  // Function to smoothly transition to a target slide index
+  const transitionToSlide = async (nextIndex: number) => {
+    if (isAnimating || nextIndex === currentSlideIndex) return;
+    setIsAnimating(true);
+
+    // 1. Backspace current text character by character
+    let text = subheadingText;
+    while (text.length > 0) {
+      text = text.slice(0, -1);
+      setSubheadingText(text);
+      await new Promise((r) => setTimeout(r, 18));
+    }
+
+    // 2. Change active slide index -> moves heading & changes image
+    setCurrentSlideIndex(nextIndex);
+
+    // Brief delay for Framer Motion heading repositioning & color shift
+    await new Promise((r) => setTimeout(r, 250));
+
+    // 3. Type new text character by character at new position
+    const targetText = heroSlides[nextIndex].subheading;
+    for (let i = 1; i <= targetText.length; i++) {
+      setSubheadingText(targetText.slice(0, i));
+      await new Promise((r) => setTimeout(r, 32));
+    }
+
+    setIsAnimating(false);
+  };
+
+  // Auto-slide effect every 7.5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isAnimating) {
+        const nextIdx = (currentSlideIndex + 1) % heroSlides.length;
+        transitionToSlide(nextIdx);
+      }
+    }, 7000);
+
+    return () => clearTimeout(timer);
+  }, [currentSlideIndex, isAnimating, subheadingText]);
 
   const stats = [
     { label: "Year Incorporated", value: "2020", prefix: "" },
@@ -37,8 +136,129 @@ export default function Home() {
       {/* Background Subtle Grid Pattern */}
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none" />
 
-      {/* Hero Section - Auto-Sliding Carousel */}
-      <HeroCarousel />
+      {/* ─── Hero Section with Dynamic Sliding Background & Framer Motion Moving Text ─── */}
+      <section className="relative h-[90vh] md:h-[92vh] w-full overflow-hidden pt-16 bg-slate-950 flex items-center justify-center">
+        {/* Background Image Carousel with Fade Animation */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlideIndex}
+            initial={{ opacity: 0.2, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0.3 }}
+            transition={{ duration: 1.1, ease: "easeInOut" }}
+            className="absolute inset-0 z-0"
+          >
+            <img
+              src={currentSlide.image}
+              alt={currentSlide.heading}
+              className="w-full h-full object-cover object-center"
+            />
+            {/* Subtle Gradient overlay to ensure text contrast */}
+            <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Dynamic Framer Motion Animated Text Container */}
+        <motion.div
+          animate={{
+            top: currentSlide.top,
+            left: currentSlide.left,
+            right: currentSlide.right,
+            color: currentSlide.textColor,
+          }}
+          transition={{
+            duration: 1.2,
+            ease: [0.22, 1, 0.36, 1], // Smooth cubic ease
+          }}
+          className={`absolute z-20 max-w-lg sm:max-w-xl md:max-w-2xl px-4 pointer-events-auto flex flex-col ${
+            currentSlide.align === "right" ? "items-end text-right" : "items-start text-left"
+          }`}
+          style={{
+            textAlign: currentSlide.textAlign,
+          }}
+        >
+          {/* Incubation Badge */}
+          <div
+            className={`inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold tracking-wide uppercase shadow-lg mb-3 border backdrop-blur-md ${currentSlide.badgeColor}`}
+          >
+            <Award className="h-4 w-4 text-cyan-400" />
+            <span>IIT Bombay & IIT Madras Alumni Startup</span>
+          </div>
+
+          {/* Heading - Moves to different location and changes font color according to picture */}
+          <motion.h1
+            animate={{ color: currentSlide.textColor }}
+            transition={{ duration: 1.0 }}
+            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight drop-shadow-md"
+          >
+            {currentSlide.heading}
+          </motion.h1>
+
+          {/* Subheading - Backspaces itself and types again at the new location, aligned with heading */}
+          <div className="mt-3 min-h-[3rem] flex items-center">
+            <p className="font-heading text-lg sm:text-xl md:text-2xl font-medium leading-relaxed drop-shadow opacity-95">
+              {subheadingText}
+              <span className="inline-block w-0.5 h-5 ml-1 bg-cyan-400 animate-pulse align-middle" />
+            </p>
+          </div>
+
+          {/* Call to Action Buttons */}
+          <div className={`flex flex-wrap items-center gap-3 pt-6 ${currentSlide.align === "right" ? "justify-end" : "justify-start"}`}>
+            <Link 
+              href="/contact"
+              className="px-6 py-3 rounded-lg text-xs md:text-sm font-heading font-semibold uppercase tracking-wider bg-cyan-500 hover:bg-cyan-400 text-white border border-cyan-400 transition-all duration-300 shadow-lg shadow-cyan-600/30"
+            >
+              Get Quote
+            </Link>
+            <Link 
+              href="/company/about"
+              className="px-6 py-3 rounded-lg text-xs md:text-sm font-heading font-semibold uppercase tracking-wider bg-white/90 hover:bg-white text-slate-900 border border-sky-200 transition-all duration-300 shadow-md backdrop-blur-sm"
+            >
+              About IXAR
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* Slide Navigation Controls & Indicators */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-3 bg-slate-950/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-xl">
+          <button
+            onClick={() => transitionToSlide((currentSlideIndex - 1 + heroSlides.length) % heroSlides.length)}
+            disabled={isAnimating}
+            className="p-1 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-50"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          
+          <div className="flex items-center space-x-2">
+            {heroSlides.map((slide, idx) => (
+              <button
+                key={slide.id}
+                onClick={() => transitionToSlide(idx)}
+                disabled={isAnimating}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  currentSlideIndex === idx
+                    ? "w-8 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
+                    : "w-2.5 bg-white/40 hover:bg-white/70"
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => transitionToSlide((currentSlideIndex + 1) % heroSlides.length)}
+            disabled={isAnimating}
+            className="p-1 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-50"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Ocean Wave / Cyan Scan Accent at bottom of hero */}
+        <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-cyan-500 via-sky-400 to-cyan-500 opacity-80 shadow-[0_0_12px_rgba(6,182,212,0.8)]" />
+      </section>
 
       {/* Statistics Section - Light Card Banner */}
       <section className="py-10 border-y border-sky-200/80 bg-white/90 shadow-sm backdrop-blur-sm">
@@ -55,7 +275,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── PPT Slide 7 Feature Pillars & Subsea Video HUD Player (BlueRobotics / EyeROV reference) ─── */}
+      {/* ─── PPT Slide 7 Feature Pillars & Subsea Video HUD Player ─── */}
       <section className="py-20 max-w-7xl mx-auto px-6 space-y-16">
         <div className="text-center space-y-3">
           <span className="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-700 font-mono text-xs font-bold tracking-widest uppercase border border-cyan-200">
@@ -146,7 +366,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Incubation & Military Support About block */}
+      {/* Incubation & Military Support About block (PPT Slide 8) */}
       <section className="py-20 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div className="space-y-6">
           <div className="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-700 font-mono text-xs font-bold tracking-widest uppercase border border-cyan-200">
@@ -175,201 +395,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Fleet Showcase (Interactive) - Crisp Light Theme */}
-      <section id="fleet" className="py-24 border-t border-sky-200/70 bg-gradient-to-b from-sky-50/60 via-white to-sky-50/40">
-        <div className="max-w-7xl mx-auto px-6 space-y-16">
-          <div className="text-center space-y-4">
-            <div className="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-700 font-mono text-xs font-bold tracking-widest uppercase border border-cyan-200">
-              PRODUCT FLEET
-            </div>
-            <h2 className="font-heading text-3xl font-bold text-slate-900 tracking-tight">
-              Advanced Underwater & Climbing Systems
-            </h2>
-            <p className="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              Explore our line-up of industrial inspection systems. Click on any unit to load real-time telemetry specs, loadout options, and dimensional models.
-            </p>
-          </div>
-
-          {/* Switcher Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-            {/* Product Tabs */}
-            <div className="flex flex-col space-y-3">
-              {products.map((prod) => (
-                <button
-                  key={prod.slug}
-                  onClick={() => setSelectedProduct(prod)}
-                  className={`w-full text-left p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
-                    selectedProduct.slug === prod.slug
-                      ? "bg-cyan-600 border-cyan-600 text-white shadow-lg shadow-cyan-600/30"
-                      : "bg-white border-sky-100 text-slate-700 hover:border-cyan-300 hover:bg-sky-50/50 shadow-sm"
-                  }`}
-                >
-                  <div className="font-heading font-semibold text-sm">{prod.name}</div>
-                  <div className={`text-[11px] mt-1 line-clamp-1 ${selectedProduct.slug === prod.slug ? "text-cyan-100" : "text-slate-500"}`}>
-                    {prod.tagline}
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Spec Details Panel */}
-            <div className="lg:col-span-2 bg-white rounded-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center border border-sky-100 shadow-xl">
-              <div className="flex flex-col items-center justify-center p-6 bg-slate-50 rounded-xl border border-sky-100 h-[270px]">
-                <img 
-                  src={selectedProduct.image} 
-                  alt={selectedProduct.name} 
-                  className="max-h-[220px] max-w-full object-contain animate-float drop-shadow-md"
-                />
-              </div>
-
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-heading text-2xl font-bold text-slate-900">{selectedProduct.name}</h3>
-                  <span className="text-xs font-mono font-semibold text-cyan-600 mt-1 block tracking-wider uppercase">
-                    {selectedProduct.depthRating}m Depth Rated
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {selectedProduct.description}
-                </p>
-
-                {/* Telemetry Grid */}
-                <div className="grid grid-cols-2 gap-4 font-mono text-xs border-t border-b border-sky-100 py-4">
-                  <div>
-                    <span className="text-slate-400 block text-[10px]">WEIGHT</span>
-                    <span className="text-slate-800 font-semibold">{selectedProduct.telemetry.weight}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[10px]">DIMENSIONS</span>
-                    <span className="text-slate-800 font-semibold">{selectedProduct.telemetry.dimensions}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[10px]">THRUSTERS</span>
-                    <span className="text-slate-800 font-semibold">{selectedProduct.telemetry.thrusters} Units</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[10px]">DEGREES OF FREEDOM</span>
-                    <span className="text-slate-800 font-semibold">{selectedProduct.telemetry.dof}</span>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <Link 
-                    href={`/products/${selectedProduct.slug}`}
-                    className="inline-flex items-center space-x-2 text-xs font-heading font-semibold uppercase tracking-wider text-cyan-600 hover:text-cyan-800 transition-colors duration-200"
-                  >
-                    <span>View Specifications & Brochure</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Industries Grid */}
-      <section className="py-24 max-w-7xl mx-auto px-6 space-y-16">
-        <div className="text-center space-y-4">
-          <div className="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-700 font-mono text-xs font-bold tracking-widest uppercase border border-cyan-200">
-            TARGET SECTORS
-          </div>
-          <h2 className="font-heading text-3xl font-bold text-slate-900 tracking-tight">
-            Industrial Applications & Inspections
-          </h2>
-          <p className="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            We deliver underwater inspection and non-destructive survey solutions tailored to the strict engineering requirements of critical industrial operations.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {industries.map((ind) => (
-            <Link 
-              key={ind.slug}
-              href={`/industries/${ind.slug}`}
-              className="bg-white rounded-2xl overflow-hidden border border-sky-100 shadow-md hover:shadow-xl hover:border-cyan-300 flex flex-col h-[350px] group transition-all duration-300"
-            >
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src={ind.heroImage} 
-                  alt={ind.name} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
-                <h3 className="absolute bottom-4 left-6 right-6 font-heading text-lg font-bold text-white drop-shadow-md">
-                  {ind.name}
-                </h3>
-              </div>
-              <div className="p-6 flex-grow flex flex-col justify-between">
-                <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
-                  {ind.description}
-                </p>
-                <span className="text-[11px] font-mono font-semibold text-cyan-600 flex items-center space-x-1.5 mt-4 uppercase">
-                  <span>View Services</span>
-                  <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ─── Case Studies Card Grid (All 8 Case Studies Shown) ───────────────────────────────────────────── */}
-      <section className="py-24 border-t border-sky-200/70 bg-gradient-to-b from-sky-50/50 to-white">
-        <div className="max-w-7xl mx-auto px-6 space-y-12">
-          <div className="text-center space-y-3">
-            <span className="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-800 font-mono text-[10px] font-bold tracking-widest uppercase border border-amber-200">
-              Field Operations
-            </span>
-            <h2 className="font-heading text-3xl font-bold text-slate-900 tracking-tight">Case Studies</h2>
-            <p className="text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
-              Real deployments. Real results. Click any project you recognise.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {caseStudies.map((cs) => (
-              <Link
-                key={cs.slug}
-                href={`/case-studies/${cs.slug}`}
-                className="group bg-white rounded-2xl border border-sky-100 shadow-md hover:shadow-xl hover:border-amber-300 overflow-hidden flex flex-col transition-all duration-300"
-              >
-                {/* Image */}
-                <div className="relative h-44 overflow-hidden">
-                  <img
-                    src={cs.image}
-                    alt={cs.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
-                  {/* Industry badge */}
-                  <span className="absolute top-3 left-3 z-20 text-[9px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-amber-500 text-white shadow">
-                    {cs.industry}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="p-5 flex flex-col flex-1 justify-between space-y-3">
-                  <h3 className="font-heading font-bold text-slate-900 text-sm leading-snug group-hover:text-amber-700 transition-colors duration-200">
-                    {cs.title}...
-                  </h3>
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                    <span className="text-[10px] font-mono text-slate-500">{cs.duration}</span>
-                    <span className="inline-flex items-center space-x-1 text-[10px] font-mono font-semibold text-cyan-600 uppercase hover:text-cyan-800 transition-colors">
-                      <span>Learn more</span>
-                      <ArrowRight className="h-2.5 w-2.5" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* ─── Trusted By — Separate Moving Logos Ticker ──────────────────────────────── */}
+      {/* ─── Trusted By — Separate Moving Logos Ticker (PPT Slide 8) ──────────────────────────────── */}
       <section className="py-16 border-t border-sky-200/70 bg-gradient-to-b from-sky-50/60 to-white overflow-hidden">
         <div className="text-center mb-10">
           <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Trusted By</span>
@@ -377,7 +403,7 @@ export default function Home() {
           <div className="w-32 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto mt-3 rounded-full" />
         </div>
 
-        {/* Infinite Moving Logo Ticker with SEPARATE logo cards */}
+        {/* Infinite Moving Logo Ticker */}
         <div className="relative">
           <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-sky-50 to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-sky-50 to-transparent z-10" />
