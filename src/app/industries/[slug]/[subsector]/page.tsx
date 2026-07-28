@@ -167,15 +167,21 @@ export default async function SubsectorPage({ params }: SubsectorPageProps) {
     <div className="relative min-h-screen bg-slate-950 text-slate-100 font-sans pb-24">
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none" />
 
-      {/* Hero Banner */}
-      <section className="relative h-[55vh] flex items-end overflow-hidden border-b border-cyan-500/20 pt-16 bg-slate-950">
+      {/* Hero Banner with Full Screen Width Video Background */}
+      <section className="relative w-full h-[65vh] md:h-[75vh] flex items-end overflow-hidden border-b border-cyan-500/20 pt-16 bg-slate-950">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/60 to-slate-950 z-10" />
-          <img
-            src={sub.image}
-            alt={sub.name}
-            className="w-full h-full object-cover object-center opacity-40"
-          />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-50"
+            poster={sub.image}
+          >
+            <source src={industry.heroVideo} type="video/mp4" />
+            <source src="/media/Carpi TRC ROV Inspection.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/60 z-10" />
         </div>
         <div className="relative z-20 max-w-7xl mx-auto px-6 pb-12 w-full space-y-4 text-left">
           <nav className="flex items-center space-x-2 text-[11px] font-mono font-semibold text-slate-400">
@@ -191,10 +197,10 @@ export default async function SubsectorPage({ params }: SubsectorPageProps) {
             <span className="inline-block px-3 py-1 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-400 font-mono text-[10px] font-bold tracking-widest uppercase">
               {industry.name} Sector
             </span>
-            <h1 className="font-heading text-4xl sm:text-6xl font-bold text-white tracking-tight drop-shadow">
+            <h1 className="font-heading text-4xl sm:text-6xl font-bold text-white tracking-tight drop-shadow-lg">
               {sub.name}
             </h1>
-            <p className="text-slate-300 text-xs sm:text-sm max-w-2xl leading-relaxed font-sans">
+            <p className="text-slate-300 text-xs sm:text-sm md:text-base max-w-2xl leading-relaxed font-sans drop-shadow">
               Robotic inspection and assessment services for {sub.name.toLowerCase()} operations.
             </p>
           </div>

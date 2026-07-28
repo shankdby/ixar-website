@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Award, CheckCircle, Search, Waves, Zap, Cpu, Settings, Gauge, ChevronLeft, ChevronRight } from "lucide-react";
 
 // 4 Hero Slides with sliding images, positions, colors and taglines
+// Note: leftDesktop/leftMobile use numeric percentages for ALL slides so Framer Motion can interpolate 7% -> 52% smoothly with ZERO snapping/pause!
 const heroSlides = [
   {
     id: 0,
@@ -17,8 +18,6 @@ const heroSlides = [
     topMobile: "10%",
     leftDesktop: "7%",
     leftMobile: "5%",
-    rightDesktop: "auto",
-    rightMobile: "auto",
     align: "left" as const,
   },
   {
@@ -31,8 +30,6 @@ const heroSlides = [
     topMobile: "45%",
     leftDesktop: "7%",
     leftMobile: "5%",
-    rightDesktop: "auto",
-    rightMobile: "auto",
     align: "left" as const,
   },
   {
@@ -43,10 +40,8 @@ const heroSlides = [
     textColor: "#0f172a", // Dark slate-900 / black
     topDesktop: "14%",
     topMobile: "10%",
-    leftDesktop: "auto",
-    leftMobile: "auto",
-    rightDesktop: "7%",
-    rightMobile: "5%",
+    leftDesktop: "50%",
+    leftMobile: "25%",
     align: "right" as const,
   },
   {
@@ -57,10 +52,8 @@ const heroSlides = [
     textColor: "#0f172a", // Dark slate-900 / black
     topDesktop: "14%",
     topMobile: "10%",
-    leftDesktop: "auto",
-    leftMobile: "auto",
-    rightDesktop: "7%",
-    rightMobile: "5%",
+    leftDesktop: "50%",
+    leftMobile: "25%",
     align: "right" as const,
   }
 ];
@@ -81,8 +74,8 @@ export default function Home() {
   const [displayedSubheading, setDisplayedSubheading] = useState(heroSlides[0].subheading);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Animation phase: 'IDLE' | 'BACKSPACING' | 'MOVING' | 'TYPING'
-  const [animState, setAnimState] = useState<"IDLE" | "BACKSPACING" | "MOVING" | "TYPING">("IDLE");
+  // Animation phase: 'IDLE' | 'BACKSPACING' | 'TYPING'
+  const [animState, setAnimState] = useState<"IDLE" | "BACKSPACING" | "TYPING">("IDLE");
   const targetSlideRef = useRef<number>(0);
 
   // Track viewport width for smooth mobile vs desktop coordinates
@@ -111,24 +104,14 @@ export default function Home() {
     if (displayedSubheading.length > 0) {
       const timer = setTimeout(() => {
         setDisplayedSubheading((prev) => prev.slice(0, -1));
-      }, 16); // ~60fps smooth erasing
+      }, 14); // Ultra-fast smooth erasing
       return () => clearTimeout(timer);
     } else {
-      // Finished erasing -> move to new position & change background image
+      // Finished erasing -> update slide index & start typing immediately (zero pause/snap!)
       setCurrentSlideIndex(targetSlideRef.current);
-      setAnimState("MOVING");
+      setAnimState("TYPING");
     }
   }, [animState, displayedSubheading]);
-
-  // Heading Shift Delay
-  useEffect(() => {
-    if (animState !== "MOVING") return;
-
-    const timer = setTimeout(() => {
-      setAnimState("TYPING");
-    }, 350); // Give heading Framer Motion time to glide smoothly
-    return () => clearTimeout(timer);
-  }, [animState]);
 
   // Typing Effect
   useEffect(() => {
@@ -168,7 +151,6 @@ export default function Home() {
   // Dynamic layout coordinates based on device viewport
   const currentTop = isMobile ? currentSlide.topMobile : currentSlide.topDesktop;
   const currentLeft = isMobile ? currentSlide.leftMobile : currentSlide.leftDesktop;
-  const currentRight = isMobile ? currentSlide.rightMobile : currentSlide.rightDesktop;
 
   return (
     <div className="relative min-h-screen bg-slate-50 text-slate-800">
@@ -202,19 +184,18 @@ export default function Home() {
           animate={{
             top: currentTop,
             left: currentLeft,
-            right: currentRight,
             color: currentSlide.textColor,
           }}
           transition={{
-            duration: 0.9,
-            ease: [0.16, 1, 0.3, 1], // GPU optimized spring-like curve
+            duration: 0.85,
+            ease: [0.25, 1, 0.5, 1], // GPU optimized cubic curve
           }}
-          className={`absolute z-20 w-[88vw] sm:w-auto max-w-lg sm:max-w-xl md:max-w-2xl px-2 sm:px-4 pointer-events-auto flex flex-col ${
+          className={`absolute z-20 w-[88vw] sm:w-[480px] md:w-[600px] px-2 sm:px-4 pointer-events-auto flex flex-col ${
             currentSlide.align === "right" ? "items-end text-right" : "items-start text-left"
           }`}
           style={{
             textAlign: currentSlide.align,
-            willChange: "top, left, right, color",
+            willChange: "top, left, color",
           }}
         >
           {/* Heading - Moves to different location and changes font color according to picture */}

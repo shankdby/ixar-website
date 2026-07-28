@@ -11,6 +11,7 @@ export interface Industry {
   title: string;
   description: string;
   heroImage: string;
+  heroVideo: string;
   overview: string;
   problems: string[];
   solution: string;
@@ -26,6 +27,7 @@ export const industries: Industry[] = [
     title: "Reliable Underwater Inspection for Critical Energy Assets",
     description: "IXAR Robotic Solutions delivers advanced robotic inspection technologies for the energy sector, utilizing Underwater ROVs and Magnetic Crawlers to inspect critical infrastructure safely and efficiently.",
     heroImage: "/images/applications/energy_hero.jpg",
+    heroVideo: "/media/Energy Video.mp4",
     overview: "From oil & gas facilities and hydropower plants to offshore wind farms and nuclear power plants, our solutions provide accurate inspection data, reduce operational risks, minimize downtime, and support informed asset integrity decisions. Our inspection solutions can also be integrated with a wide range of Non-Destructive Testing (NDT) methods, delivering comprehensive asset condition assessments while extending the service life of critical infrastructure.",
     problems: [
       "High safety risks for divers in confined and hazardous underwater environments.",
@@ -81,6 +83,7 @@ export const industries: Industry[] = [
     title: "Comprehensive Inspection for Submerged Civil Infrastructure",
     description: "Civil infrastructure demands regular inspection to ensure structural safety, operational reliability, and regulatory compliance. Our solutions provide robotic inspection services for civil works.",
     heroImage: "/images/applications/infrastructure_hero.jpg",
+    heroVideo: "/media/Infra video.mp4",
     overview: "Our solutions provide robotic inspection services for dams, bridges, water utilities, and telecommunication infrastructure using advanced Underwater ROVs and Magnetic Crawlers. Our robotic systems access submerged, elevated, and confined areas without disrupting operations, enabling engineers to identify structural deterioration, corrosion, cracks, sediment accumulation, and other defects. By delivering high-quality visual data and supporting NDT techniques, we enable operators to maintain critical safety standards.",
     problems: [
       "Inability to manually inspect bridge piles under strong water currents.",
@@ -133,6 +136,7 @@ export const industries: Industry[] = [
     title: "Advanced Inspection Solutions for Marine Operations",
     description: "The maritime industry operates in demanding environments where asset reliability and safety are essential. IXAR offers robotic cleaning and hull inspection solutions.",
     heroImage: "/images/applications/maritime_hero.jpg",
+    heroVideo: "/media/Maritime Video.mp4",
     overview: "IXAR Robotic Solutions offers robotic inspection solutions for ports, shipping vessels, shipyards, and marine construction projects. Our underwater ROVs and magnetic crawlers perform detailed inspections of ship hulls, quay walls, underwater foundations, offshore structures, and steel surfaces without the need for extensive manual intervention. These inspections support preventive maintenance, reduce vessel downtime, improve operational efficiency, and help ensure compliance with international maritime standards.",
     problems: [
       "Biofouling on ship hulls increasing fuel consumption by up to 30%.",
@@ -185,6 +189,7 @@ export const industries: Industry[] = [
     title: "Smart Underwater Monitoring for Aquaculture Operations",
     description: "Sustainable aquaculture depends on continuous monitoring of underwater assets and farming infrastructure. Our bots assist fish farms with cage, net, and mooring checks.",
     heroImage: "/images/applications/aquaculture_hero.jpg",
+    heroVideo: "/media/Fishery and Aquaculture Video.mp4",
     overview: "Our bots assist fish farms and aquaculture operators with inspections of fish cages, nets, and mooring systems. Our ROVs enable rapid assessment of net damage, biofouling, and structural integrity. These capabilities improve farm productivity, reduce operational risks, and support healthier aquatic environments with minimal disturbance to marine life.",
     problems: [
       "Undetected tears in fish cage nets leading to massive stock escape.",
@@ -217,6 +222,7 @@ export const industries: Industry[] = [
     title: "Robotic Systems for Mission-Critical Search and Rescue",
     description: "Robotic technologies play a critical role in missions where speed, safety, and accurate underwater information are essential. We support emergency response teams and research groups.",
     heroImage: "/images/applications/rescue_hero.jpg",
+    heroVideo: "/media/Research Video.mp4",
     overview: "IXAR Robotic Solutions supports research institutions, emergency response teams, and security agencies with remotely operated systems capable of underwater exploration, surveillance, object search, sediment assessment, and water sampling operations. By providing real-time video, precise manoeuvrability, and access to hazardous or difficult-to-reach environments, we help keep teams safe.",
     problems: [
       "High risk to rescue divers in fast-flowing river currents or deep lakes.",
