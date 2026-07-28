@@ -1,238 +1,119 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const images = [
-  '/carousel-1.png',
-  '/carousel-2.png',
-  '/carousel-3.png',
-  '/carousel-4.png',
+const slides = [
+  {
+    image: '/carousel-1.png',
+    tagline: 'Engineering the Future',
+    title: 'Advanced Underwater Robotics',
+    description:
+      'Autonomous inspection, mapping, and sensing solutions for demanding marine environments.',
+  },
+  {
+    image: '/carousel-2.png',
+    tagline: 'Precision • Reliability',
+    title: 'Built for Extreme Conditions',
+    description:
+      'High-performance robotic platforms designed for offshore and industrial operations.',
+  },
+  {
+    image: '/carousel-3.png',
+    tagline: 'Innovation in Motion',
+    title: 'Smarter Ocean Exploration',
+    description:
+      'AI-powered navigation and data acquisition for next-generation marine missions.',
+  },
+  {
+    image: '/carousel-4.png',
+    tagline: 'From Vision to Reality',
+    title: 'Custom Robotics Solutions',
+    description:
+      'End-to-end engineering services for autonomous systems and underwater technology.',
+  },
 ];
 
-const slideContent = [
-  {
-    tagline: 'Engineering the Future of Underwater Inspection',
-    textColor: 'text-white',
-    quadrant: 'top-left',
-  },
-  {
-    tagline: 'Innovating Underwater Robotics for Safer Inspections',
-    textColor: 'text-white',
-    quadrant: 'top-right',
-  },
-  {
-    tagline: 'Making Complex Underwater Missions Simple',
-    textColor: 'text-white',
-    quadrant: 'bottom-left',
-  },
-  {
-    tagline: 'Advanced Robotics for Critical Underwater Operations',
-    textColor: 'text-white',
-    quadrant: 'center',
-  },
-];
-
-const getPositionClass = (quadrant: string) => {
-  switch (quadrant) {
-    case 'top-left':
-      return 'top-[8%] left-[5%]';
-    case 'top-right':
-      return 'top-[8%] right-[5%]';
-    case 'bottom-left':
-      return 'bottom-[20%] left-[5%]';
-    case 'bottom-right':
-      return 'bottom-[20%] right-[5%]';
-    case 'center':
-      return 'top-[20%] left-1/2 -translate-x-1/2';
-    default:
-      return 'top-1/4 left-1/2 -translate-x-1/2';
-  }
-};
-
-// ================= FIXED =================
-const typingVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    width: 0,
-  },
-
-  visible: (i: number) => ({
-    opacity: 1,
-    width: 'auto',
-    transition: {
-      delay: i * 0.02,
-      duration: 0.03,
-      ease: 'linear' as const,
-    },
-  }),
-
-  exit: {
-    opacity: 0,
-    width: 0,
-    transition: {
-      duration: 0.8,
-      ease: 'easeInOut' as const,
-    },
-  },
-};
-// =========================================
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.01,
-      delayChildren: 0.1,
-    },
-  },
-
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
-
-export function HeroCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
+export default function HeroCarousel() {
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    if (!isAutoPlay) return;
+    const id = setInterval(() => {
+      setCurrent((p) => (p + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, []);
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlay]);
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-    setIsAutoPlay(false);
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-    setIsAutoPlay(false);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-    setIsAutoPlay(false);
-  };
-
-  useEffect(() => {
-    if (!isAutoPlay) {
-      const timer = setTimeout(() => setIsAutoPlay(true), 10000);
-      return () => clearTimeout(timer);
-    }
-  }, [isAutoPlay]);
+  const slide = slides[current];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
-      <div className="relative w-full h-full">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <Image
-              src={image}
-              alt={`Carousel slide ${index + 1}`}
-              fill
-              className="object-cover"
-              priority={index === 0}
-            />
-          </div>
-        ))}
-      </div>
+    <section className="relative h-screen overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={slide.image}
+            alt={slide.title}
+            fill
+            priority
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </motion.div>
+      </AnimatePresence>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
-
-      <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between px-6 py-12">
-        <AnimatePresence mode="wait">
+      <div className="relative z-10 flex h-full items-center">
+        <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
           <motion.div
-            key={`text-block-${currentIndex}`}
-            className={`absolute ${getPositionClass(
-              slideContent[currentIndex].quadrant
-            )}`}
-            style={{ width: 'auto', maxWidth: '400px' }}
+            key={slide.title}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: -30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 30 }}
-              transition={{
-                duration: 0.7,
-                type: 'spring',
-                stiffness: 100,
-                damping: 20,
-              }}
-              className="mb-4 md:mb-6"
-            >
-              <h1
-                className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-lg whitespace-nowrap"
-                style={{ lineHeight: '1.2' }}
-              >
-                IXAR Robotic Solutions
-              </h1>
-            </motion.div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">
+              {slide.tagline}
+            </p>
 
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={containerVariants}
-              className="w-screen max-w-none"
-              style={{
-                wordWrap: 'break-word',
-                wordBreak: 'break-word',
-                overflowWrap: 'break-word',
-                marginLeft: '-1.5rem',
-              }}
-            >
-              <p
-                className={`text-base md:text-lg lg:text-xl font-semibold leading-snug drop-shadow-lg ${slideContent[currentIndex].textColor}`}
-              >
-                {slideContent[currentIndex].tagline.split('').map((char, i) => (
-                  <motion.span
-                    key={i}
-                    custom={i}
-                    variants={typingVariants}
-                    className="inline-block"
-                    style={{ overflow: 'hidden' }}
-                  >
-                    {char === ' ' ? '\u00A0' : char}
-                  </motion.span>
-                ))}
-              </p>
-            </motion.div>
+            <h1 className="text-4xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl">
+              {slide.title}
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-200">
+              {slide.description}
+            </p>
+
+            <div className="mt-10 flex flex-wrap gap-4">
+              <button className="rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-white transition hover:bg-cyan-400">
+                Explore Solutions
+              </button>
+              <button className="rounded-xl border border-white/40 px-6 py-3 font-semibold text-white backdrop-blur transition hover:bg-white/10">
+                Contact Us
+              </button>
+            </div>
           </motion.div>
-        </AnimatePresence>
+        </div>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-        {images.map((_, index) => (
+      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-3">
+        {slides.map((_, i) => (
           <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`h-2 rounded-full transition-all ${
-              index === currentIndex
-                ? 'bg-white w-8'
-                : 'bg-white/50 w-2 hover:bg-white/75'
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`h-2.5 rounded-full transition-all ${
+              current === i ? 'w-10 bg-cyan-400' : 'w-2.5 bg-white/50'
             }`}
-            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
+
