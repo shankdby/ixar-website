@@ -359,8 +359,8 @@ export default function Home() {
               className="w-full h-full object-cover"
               poster="/media/Best Pic.png"
             >
+              <source src="/media/Untitled design.mp4" type="video/mp4" />
               <source src="/media/Energy Video.mp4" type="video/mp4" />
-              <source src="/media/Record 1.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 

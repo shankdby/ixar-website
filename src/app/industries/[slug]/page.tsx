@@ -35,21 +35,21 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
 
       {/* ─── Full Screen Width Autoplay Video Hero Section for Applications ─── */}
       <section className="relative w-full h-[70vh] md:h-[82vh] flex items-center justify-center overflow-hidden bg-slate-950 pt-16 border-b border-sky-200/70">
-        {/* Full-width Autoplay Background Video */}
-        <div className="absolute inset-0 z-0">
+        {/* Full-width Autoplay Background Video with Pure Black Background (No image flash) */}
+        <div className="absolute inset-0 z-0 bg-slate-950">
           <video 
             autoPlay 
             loop 
             muted 
             playsInline
-            className="w-full h-full object-cover opacity-60"
-            poster={industry.heroImage}
+            preload="auto"
+            className="w-full h-full object-cover opacity-75"
           >
             <source src={industry.heroVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          {/* Ambient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/60 z-10" />
+          {/* Subtle gradient overlay for text readability without obscuring video */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-slate-950/40 z-10" />
         </div>
 
         {/* Content Overlay */}

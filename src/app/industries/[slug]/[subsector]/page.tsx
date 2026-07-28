@@ -167,21 +167,15 @@ export default async function SubsectorPage({ params }: SubsectorPageProps) {
     <div className="relative min-h-screen bg-slate-950 text-slate-100 font-sans pb-24">
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none" />
 
-      {/* Hero Banner with Full Screen Width Video Background */}
-      <section className="relative w-full h-[65vh] md:h-[75vh] flex items-end overflow-hidden border-b border-cyan-500/20 pt-16 bg-slate-950">
+      {/* Subapplication Hero Header with High-Resolution Image */}
+      <section className="relative w-full h-[60vh] md:h-[70vh] flex items-end overflow-hidden border-b border-cyan-500/20 pt-16 bg-slate-950">
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover opacity-50"
-            poster={sub.image}
-          >
-            <source src={industry.heroVideo} type="video/mp4" />
-            <source src="/media/Carpi TRC ROV Inspection.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/60 z-10" />
+          <img
+            src={sub.image}
+            alt={sub.name}
+            className="w-full h-full object-cover object-center opacity-85 shadow-2xl"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-slate-950/40 z-10" />
         </div>
         <div className="relative z-20 max-w-7xl mx-auto px-6 pb-12 w-full space-y-4 text-left">
           <nav className="flex items-center space-x-2 text-[11px] font-mono font-semibold text-slate-400">
