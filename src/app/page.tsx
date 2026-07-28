@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Award, CheckCircle, Search, Waves, Zap, Cpu, Settings, Gauge, ChevronLeft, ChevronRight } from "lucide-react";
 
 // 4 Hero Slides with sliding images, positions, colors and taglines
@@ -12,56 +12,56 @@ const heroSlides = [
     image: "/media/hero-slide-1.jpg",
     heading: "IXAR Robotic Solutions",
     subheading: "Engineering the Future of Underwater Inspection",
-    position: "top-left",
-    align: "left" as const,
     textColor: "#0f172a", // Dark slate-900 / black
-    badgeColor: "bg-slate-900/85 text-cyan-300 border-cyan-400/50",
-    top: "14%",
-    left: "6%",
-    right: "auto",
-    textAlign: "left" as const,
+    topDesktop: "14%",
+    topMobile: "10%",
+    leftDesktop: "7%",
+    leftMobile: "5%",
+    rightDesktop: "auto",
+    rightMobile: "auto",
+    align: "left" as const,
   },
   {
     id: 1,
     image: "/media/hero-slide-2.jpg",
     heading: "IXAR Robotic Solutions",
     subheading: "Innovating Underwater Robotics for Safer Inspections",
-    position: "bottom-left",
-    align: "left" as const,
     textColor: "#ffffff", // Crisp white
-    badgeColor: "bg-black/75 text-cyan-300 border-cyan-400/50",
-    top: "54%",
-    left: "6%",
-    right: "auto",
-    textAlign: "left" as const,
+    topDesktop: "52%",
+    topMobile: "45%",
+    leftDesktop: "7%",
+    leftMobile: "5%",
+    rightDesktop: "auto",
+    rightMobile: "auto",
+    align: "left" as const,
   },
   {
     id: 2,
     image: "/media/hero-slide-3.jpg",
     heading: "IXAR Robotic Solutions",
     subheading: "Making Complex Underwater Missions Simple",
-    position: "top-right",
-    align: "right" as const,
     textColor: "#0f172a", // Dark slate-900 / black
-    badgeColor: "bg-slate-900/85 text-cyan-300 border-cyan-400/50",
-    top: "14%",
-    left: "auto",
-    right: "6%",
-    textAlign: "right" as const,
+    topDesktop: "14%",
+    topMobile: "10%",
+    leftDesktop: "auto",
+    leftMobile: "auto",
+    rightDesktop: "7%",
+    rightMobile: "5%",
+    align: "right" as const,
   },
   {
     id: 3,
     image: "/media/hero-slide-4.jpg",
     heading: "IXAR Robotic Solutions",
     subheading: "Advanced Robotics for Critical Underwater Operations",
-    position: "top-right",
-    align: "right" as const,
     textColor: "#0f172a", // Dark slate-900 / black
-    badgeColor: "bg-slate-900/85 text-cyan-300 border-cyan-400/50",
-    top: "14%",
-    left: "auto",
-    right: "6%",
-    textAlign: "right" as const,
+    topDesktop: "14%",
+    topMobile: "10%",
+    leftDesktop: "auto",
+    leftMobile: "auto",
+    rightDesktop: "7%",
+    rightMobile: "5%",
+    align: "right" as const,
   }
 ];
 
@@ -78,51 +78,85 @@ const clientLogos = [
 
 export default function Home() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [subheadingText, setSubheadingText] = useState(heroSlides[0].subheading);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [displayedSubheading, setDisplayedSubheading] = useState(heroSlides[0].subheading);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Animation phase: 'IDLE' | 'BACKSPACING' | 'MOVING' | 'TYPING'
+  const [animState, setAnimState] = useState<"IDLE" | "BACKSPACING" | "MOVING" | "TYPING">("IDLE");
+  const targetSlideRef = useRef<number>(0);
+
+  // Track viewport width for smooth mobile vs desktop coordinates
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const currentSlide = heroSlides[currentSlideIndex];
 
-  // Function to smoothly transition to a target slide index
-  const transitionToSlide = async (nextIndex: number) => {
-    if (isAnimating || nextIndex === currentSlideIndex) return;
-    setIsAnimating(true);
+  // Silky Smooth Typewriter State Machine Ticker
+  const triggerTransition = useCallback((nextIdx: number) => {
+    if (animState !== "IDLE" || nextIdx === currentSlideIndex) return;
+    targetSlideRef.current = nextIdx;
+    setAnimState("BACKSPACING");
+  }, [animState, currentSlideIndex]);
 
-    // 1. Backspace current text character by character
-    let text = subheadingText;
-    while (text.length > 0) {
-      text = text.slice(0, -1);
-      setSubheadingText(text);
-      await new Promise((r) => setTimeout(r, 18));
-    }
-
-    // 2. Change active slide index -> moves heading & changes image
-    setCurrentSlideIndex(nextIndex);
-
-    // Brief delay for Framer Motion heading repositioning & color shift
-    await new Promise((r) => setTimeout(r, 250));
-
-    // 3. Type new text character by character at new position
-    const targetText = heroSlides[nextIndex].subheading;
-    for (let i = 1; i <= targetText.length; i++) {
-      setSubheadingText(targetText.slice(0, i));
-      await new Promise((r) => setTimeout(r, 32));
-    }
-
-    setIsAnimating(false);
-  };
-
-  // Auto-slide effect every 7.5 seconds
+  // Backspacing Effect
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isAnimating) {
-        const nextIdx = (currentSlideIndex + 1) % heroSlides.length;
-        transitionToSlide(nextIdx);
-      }
-    }, 7000);
+    if (animState !== "BACKSPACING") return;
 
+    if (displayedSubheading.length > 0) {
+      const timer = setTimeout(() => {
+        setDisplayedSubheading((prev) => prev.slice(0, -1));
+      }, 16); // ~60fps smooth erasing
+      return () => clearTimeout(timer);
+    } else {
+      // Finished erasing -> move to new position & change background image
+      setCurrentSlideIndex(targetSlideRef.current);
+      setAnimState("MOVING");
+    }
+  }, [animState, displayedSubheading]);
+
+  // Heading Shift Delay
+  useEffect(() => {
+    if (animState !== "MOVING") return;
+
+    const timer = setTimeout(() => {
+      setAnimState("TYPING");
+    }, 350); // Give heading Framer Motion time to glide smoothly
     return () => clearTimeout(timer);
-  }, [currentSlideIndex, isAnimating, subheadingText]);
+  }, [animState]);
+
+  // Typing Effect
+  useEffect(() => {
+    if (animState !== "TYPING") return;
+
+    const targetText = heroSlides[currentSlideIndex].subheading;
+    if (displayedSubheading.length < targetText.length) {
+      const timer = setTimeout(() => {
+        setDisplayedSubheading(targetText.slice(0, displayedSubheading.length + 1));
+      }, 25); // ~40fps typing speed
+      return () => clearTimeout(timer);
+    } else {
+      // Finished typing -> return to IDLE
+      setAnimState("IDLE");
+    }
+  }, [animState, displayedSubheading, currentSlideIndex]);
+
+  // Auto-advance slideshow after viewing idle slide for 5 seconds
+  useEffect(() => {
+    if (animState !== "IDLE") return;
+
+    const autoTimer = setTimeout(() => {
+      const nextIdx = (currentSlideIndex + 1) % heroSlides.length;
+      triggerTransition(nextIdx);
+    }, 5000);
+
+    return () => clearTimeout(autoTimer);
+  }, [animState, currentSlideIndex, triggerTransition]);
 
   const stats = [
     { label: "Year Incorporated", value: "2020", prefix: "" },
@@ -131,88 +165,86 @@ export default function Home() {
     { label: "Incubated At", value: "IIT Bombay", prefix: "" }
   ];
 
+  // Dynamic layout coordinates based on device viewport
+  const currentTop = isMobile ? currentSlide.topMobile : currentSlide.topDesktop;
+  const currentLeft = isMobile ? currentSlide.leftMobile : currentSlide.leftDesktop;
+  const currentRight = isMobile ? currentSlide.rightMobile : currentSlide.rightDesktop;
+
   return (
     <div className="relative min-h-screen bg-slate-50 text-slate-800">
       {/* Background Subtle Grid Pattern */}
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none" />
 
       {/* ─── Hero Section with Dynamic Sliding Background & Framer Motion Moving Text ─── */}
-      <section className="relative h-[90vh] md:h-[92vh] w-full overflow-hidden pt-16 bg-slate-950 flex items-center justify-center">
-        {/* Background Image Carousel with Fade Animation */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlideIndex}
-            initial={{ opacity: 0.2, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0.3 }}
-            transition={{ duration: 1.1, ease: "easeInOut" }}
-            className="absolute inset-0 z-0"
-          >
-            <img
-              src={currentSlide.image}
-              alt={currentSlide.heading}
-              className="w-full h-full object-cover object-center"
-            />
-            {/* Subtle Gradient overlay to ensure text contrast */}
-            <div className="absolute inset-0 bg-black/15 pointer-events-none" />
-          </motion.div>
-        </AnimatePresence>
+      <section className="relative h-[88vh] md:h-[92vh] w-full overflow-hidden pt-16 bg-slate-950 flex items-center justify-center">
+        {/* Background Stack with Hardware Accelerated Opacity Crossfade */}
+        <div className="absolute inset-0 z-0">
+          {heroSlides.map((slide, idx) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                currentSlideIndex === idx ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
+              style={{ willChange: "opacity" }}
+            >
+              <img
+                src={slide.image}
+                alt={slide.heading}
+                className="w-full h-full object-cover object-center transform-gpu"
+              />
+              <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+            </div>
+          ))}
+        </div>
 
         {/* Dynamic Framer Motion Animated Text Container */}
         <motion.div
           animate={{
-            top: currentSlide.top,
-            left: currentSlide.left,
-            right: currentSlide.right,
+            top: currentTop,
+            left: currentLeft,
+            right: currentRight,
             color: currentSlide.textColor,
           }}
           transition={{
-            duration: 1.2,
-            ease: [0.22, 1, 0.36, 1], // Smooth cubic ease
+            duration: 0.9,
+            ease: [0.16, 1, 0.3, 1], // GPU optimized spring-like curve
           }}
-          className={`absolute z-20 max-w-lg sm:max-w-xl md:max-w-2xl px-4 pointer-events-auto flex flex-col ${
+          className={`absolute z-20 w-[88vw] sm:w-auto max-w-lg sm:max-w-xl md:max-w-2xl px-2 sm:px-4 pointer-events-auto flex flex-col ${
             currentSlide.align === "right" ? "items-end text-right" : "items-start text-left"
           }`}
           style={{
-            textAlign: currentSlide.textAlign,
+            textAlign: currentSlide.align,
+            willChange: "top, left, right, color",
           }}
         >
-          {/* Incubation Badge */}
-          <div
-            className={`inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold tracking-wide uppercase shadow-lg mb-3 border backdrop-blur-md ${currentSlide.badgeColor}`}
-          >
-            <Award className="h-4 w-4 text-cyan-400" />
-            <span>IIT Bombay & IIT Madras Alumni Startup</span>
-          </div>
-
           {/* Heading - Moves to different location and changes font color according to picture */}
           <motion.h1
             animate={{ color: currentSlide.textColor }}
-            transition={{ duration: 1.0 }}
-            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight drop-shadow-md"
+            transition={{ duration: 0.8 }}
+            className="font-heading text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight drop-shadow-md"
           >
             {currentSlide.heading}
           </motion.h1>
 
           {/* Subheading - Backspaces itself and types again at the new location, aligned with heading */}
-          <div className="mt-3 min-h-[3rem] flex items-center">
-            <p className="font-heading text-lg sm:text-xl md:text-2xl font-medium leading-relaxed drop-shadow opacity-95">
-              {subheadingText}
-              <span className="inline-block w-0.5 h-5 ml-1 bg-cyan-400 animate-pulse align-middle" />
+          <div className="mt-2.5 sm:mt-3 min-h-[2.5rem] sm:min-h-[3rem] flex items-center">
+            <p className="font-heading text-base sm:text-xl md:text-2xl font-medium leading-snug sm:leading-relaxed drop-shadow opacity-95">
+              {displayedSubheading}
+              <span className="inline-block w-0.5 h-4 sm:h-5 ml-1 bg-cyan-400 animate-pulse align-middle" />
             </p>
           </div>
 
           {/* Call to Action Buttons */}
-          <div className={`flex flex-wrap items-center gap-3 pt-6 ${currentSlide.align === "right" ? "justify-end" : "justify-start"}`}>
+          <div className={`flex flex-wrap items-center gap-3 pt-4 sm:pt-6 ${currentSlide.align === "right" ? "justify-end" : "justify-start"}`}>
             <Link 
               href="/contact"
-              className="px-6 py-3 rounded-lg text-xs md:text-sm font-heading font-semibold uppercase tracking-wider bg-cyan-500 hover:bg-cyan-400 text-white border border-cyan-400 transition-all duration-300 shadow-lg shadow-cyan-600/30"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg text-xs md:text-sm font-heading font-semibold uppercase tracking-wider bg-cyan-500 hover:bg-cyan-400 text-white border border-cyan-400 transition-all duration-300 shadow-lg shadow-cyan-600/30 active:scale-95"
             >
               Get Quote
             </Link>
             <Link 
               href="/company/about"
-              className="px-6 py-3 rounded-lg text-xs md:text-sm font-heading font-semibold uppercase tracking-wider bg-white/90 hover:bg-white text-slate-900 border border-sky-200 transition-all duration-300 shadow-md backdrop-blur-sm"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg text-xs md:text-sm font-heading font-semibold uppercase tracking-wider bg-white/90 hover:bg-white text-slate-900 border border-sky-200 transition-all duration-300 shadow-md backdrop-blur-sm active:scale-95"
             >
               About IXAR
             </Link>
@@ -220,26 +252,26 @@ export default function Home() {
         </motion.div>
 
         {/* Slide Navigation Controls & Indicators */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-3 bg-slate-950/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-xl">
+        <div className="absolute bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-3 bg-slate-950/70 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-xl">
           <button
-            onClick={() => transitionToSlide((currentSlideIndex - 1 + heroSlides.length) % heroSlides.length)}
-            disabled={isAnimating}
-            className="p-1 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-50"
+            onClick={() => triggerTransition((currentSlideIndex - 1 + heroSlides.length) % heroSlides.length)}
+            disabled={animState !== "IDLE"}
+            className="p-1 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-40 cursor-pointer"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-4 sm:h-5 w-4 sm:w-5" />
           </button>
           
           <div className="flex items-center space-x-2">
             {heroSlides.map((slide, idx) => (
               <button
                 key={slide.id}
-                onClick={() => transitionToSlide(idx)}
-                disabled={isAnimating}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
+                onClick={() => triggerTransition(idx)}
+                disabled={animState !== "IDLE"}
+                className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                   currentSlideIndex === idx
-                    ? "w-8 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
-                    : "w-2.5 bg-white/40 hover:bg-white/70"
+                    ? "w-6 sm:w-8 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
+                    : "w-2 sm:w-2.5 bg-white/40 hover:bg-white/70"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -247,12 +279,12 @@ export default function Home() {
           </div>
 
           <button
-            onClick={() => transitionToSlide((currentSlideIndex + 1) % heroSlides.length)}
-            disabled={isAnimating}
-            className="p-1 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-50"
+            onClick={() => triggerTransition((currentSlideIndex + 1) % heroSlides.length)}
+            disabled={animState !== "IDLE"}
+            className="p-1 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-40 cursor-pointer"
             aria-label="Next slide"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-4 sm:h-5 w-4 sm:w-5" />
           </button>
         </div>
 
