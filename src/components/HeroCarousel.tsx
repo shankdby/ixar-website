@@ -15,24 +15,81 @@ const slideContent = [
   {
     tagline: 'Engineering the Future of Underwater Inspection',
     textColor: 'text-white',
-    position: 'top-1/3',
+    // Use quadrant positions for better control
+    quadrant: 'top-left', // top-left, top-right, bottom-left, bottom-right, center
   },
   {
     tagline: 'Innovating Underwater Robotics for Safer Inspections',
     textColor: 'text-white',
-    position: 'top-2/3',
+    quadrant: 'top-right',
   },
   {
     tagline: 'Making Complex Underwater Missions Simple',
     textColor: 'text-white',
-    position: 'top-1/2',
+    quadrant: 'bottom-left',
   },
   {
     tagline: 'Advanced Robotics for Critical Underwater Operations',
     textColor: 'text-white',
-    position: 'top-1/3',
+    quadrant: 'center',
   },
 ];
+
+const getPositionClass = (quadrant: string) => {
+  switch (quadrant) {
+    case 'top-left':
+      return 'top-[8%] left-[5%]';
+    case 'top-right':
+      return 'top-[8%] right-[5%]';
+    case 'bottom-left':
+      return 'bottom-[20%] left-[5%]';
+    case 'bottom-right':
+      return 'bottom-[20%] right-[5%]';
+    case 'center':
+      return 'top-[20%] left-1/2 -translate-x-1/2';
+    default:
+      return 'top-1/4 left-1/2 -translate-x-1/2';
+  }
+};
+
+// Typing animation variants
+const typingVariants = {
+  hidden: { opacity: 0, width: 0 },
+  visible: (i: number) => ({
+    opacity: 1,
+    width: 'auto',
+    transition: {
+      delay: i * 0.02,
+      duration: 0.03,
+      ease: 'linear',
+    },
+  }),
+  exit: {
+    opacity: 0,
+    width: 0,
+    transition: {
+      duration: 0.8,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.01,
+      delayChildren: 0.1,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
 
 export function HeroCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -97,46 +154,50 @@ export function HeroCarousel() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
 
       {/* Text Overlay */}
-      <div className="absolute inset-0 z-10 pointer-events-none px-6">
-        {/* Always visible heading at top */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full">
-          <AnimatePresence mode="wait">
+      <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between px-6 py-12">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`text-block-${currentIndex}`}
+            className={`absolute ${getPositionClass(slideContent[currentIndex].quadrant)}`}
+            style={{ width: 'auto', maxWidth: '400px' }}
+          >
+            {/* Heading - shifts position per slide with smooth animation */}
             <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 30 }}
-              transition={{ duration: 0.7 }}
-              className="text-center"
+              initial={{ opacity: 0, scale: 0.8, y: -30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 30 }}
+              transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 20 }}
+              className="mb-2 md:mb-3"
             >
-              <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-lg">
+              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight drop-shadow-lg leading-tight max-w-xs">
                 IXAR Robotic<br />Solutions
               </h1>
             </motion.div>
-          </AnimatePresence>
-        </div>
 
-        {/* Dynamic tagline - positioned based on slide */}
-        <div 
-          className={`absolute left-1/2 -translate-x-1/2 w-full max-w-4xl transition-all duration-700 ${
-            slideContent[currentIndex].position
-          }`}
-        >
-          <AnimatePresence mode="wait">
+            {/* Tagline - typing effect animation */}
             <motion.div
-              key={`tagline-${currentIndex}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.6 }}
-              className={`text-center ${slideContent[currentIndex].textColor}`}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={containerVariants}
+              className="max-w-sm"
             >
-              <p className="text-lg md:text-2xl lg:text-3xl font-semibold leading-tight drop-shadow-lg">
-                {slideContent[currentIndex].tagline}
+              <p className={`text-sm md:text-base lg:text-lg font-semibold leading-snug drop-shadow-lg ${slideContent[currentIndex].textColor}`}>
+                {slideContent[currentIndex].tagline.split('').map((char, i) => (
+                  <motion.span
+                    key={i}
+                    custom={i}
+                    variants={typingVariants}
+                    className="inline-block"
+                    style={{ overflow: 'hidden' }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
               </p>
             </motion.div>
-          </AnimatePresence>
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Navigation Arrows */}
