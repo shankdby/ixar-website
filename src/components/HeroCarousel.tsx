@@ -167,10 +167,10 @@ export function HeroCarousel() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: 30 }}
               transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 20 }}
-              className="mb-2 md:mb-3"
+              className="mb-4 md:mb-6"
             >
-              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight drop-shadow-lg leading-tight max-w-xs">
-                IXAR Robotic<br />Solutions
+              <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-lg leading-tight max-w-2xl">
+                IXAR Robotic Solutions
               </h1>
             </motion.div>
 
@@ -180,9 +180,9 @@ export function HeroCarousel() {
               animate="visible"
               exit="exit"
               variants={containerVariants}
-              className="max-w-sm"
+              className="max-w-xl"
             >
-              <p className={`text-sm md:text-base lg:text-lg font-semibold leading-snug drop-shadow-lg ${slideContent[currentIndex].textColor}`}>
+              <p className={`text-lg md:text-xl lg:text-2xl font-semibold leading-snug drop-shadow-lg ${slideContent[currentIndex].textColor}`}>
                 {slideContent[currentIndex].tagline.split('').map((char, i) => (
                   <motion.span
                     key={i}
