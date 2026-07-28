@@ -2,12 +2,36 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const images = [
   '/carousel-1.png',
   '/carousel-2.png',
   '/carousel-3.png',
   '/carousel-4.png',
+];
+
+const slideContent = [
+  {
+    tagline: 'Engineering the Future of Underwater Inspection',
+    textColor: 'text-white',
+    position: 'top-1/3',
+  },
+  {
+    tagline: 'Innovating Underwater Robotics for Safer Inspections',
+    textColor: 'text-white',
+    position: 'top-2/3',
+  },
+  {
+    tagline: 'Making Complex Underwater Missions Simple',
+    textColor: 'text-white',
+    position: 'top-1/2',
+  },
+  {
+    tagline: 'Advanced Robotics for Critical Underwater Operations',
+    textColor: 'text-white',
+    position: 'top-1/3',
+  },
 ];
 
 export function HeroCarousel() {
@@ -71,6 +95,49 @@ export function HeroCarousel() {
 
       {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
+
+      {/* Text Overlay */}
+      <div className="absolute inset-0 z-10 pointer-events-none px-6">
+        {/* Always visible heading at top */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.7 }}
+              className="text-center"
+            >
+              <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-lg">
+                IXAR Robotic<br />Solutions
+              </h1>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Dynamic tagline - positioned based on slide */}
+        <div 
+          className={`absolute left-1/2 -translate-x-1/2 w-full max-w-4xl transition-all duration-700 ${
+            slideContent[currentIndex].position
+          }`}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`tagline-${currentIndex}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6 }}
+              className={`text-center ${slideContent[currentIndex].textColor}`}
+            >
+              <p className="text-lg md:text-2xl lg:text-3xl font-semibold leading-tight drop-shadow-lg">
+                {slideContent[currentIndex].tagline}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
 
       {/* Navigation Arrows */}
       <button
