@@ -31,9 +31,9 @@ export default function DepthGauge() {
           style={{ top: `calc(${scrollPercent}% * 0.82 + 5%)` }}
         >
           <img 
-            src="/images/products/slide_43_img_1.png" 
+            src="/media/ROV.png" 
             alt="ROV Indicator" 
-            className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(0,245,255,0.9)] animate-pulse-slow"
+            className="w-12 h-12 object-contain drop-shadow-[0_0_10px_rgba(6,182,212,1)] scale-110 brightness-110 contrast-125"
           />
         </div>
 

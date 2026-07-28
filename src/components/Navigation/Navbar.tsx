@@ -182,7 +182,7 @@ export default function Navbar() {
 
             {/* Case Studies Link */}
             <Link 
-              href="/case-studies/cooling-tower-sump-inspection" 
+              href="/case-studies" 
               className={`font-heading text-sm font-semibold tracking-wide transition-colors duration-200 ${
                 pathname.startsWith("/case-studies") 
                   ? "text-cyan-600 font-bold" 
@@ -364,7 +364,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Case Studies Mobile */}
-                <Link href="/case-studies/cooling-tower-sump-inspection" className="font-heading text-lg font-medium text-white p-2 rounded hover:bg-navy-light/30">
+                <Link href="/case-studies" className="font-heading text-lg font-medium text-white p-2 rounded hover:bg-navy-light/30">
                   Case Studies
                 </Link>
 
