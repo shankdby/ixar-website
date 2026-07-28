@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight, CheckCircle, Wrench, Target } from "lucide-react
 import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/caseStudies";
 import { products } from "@/data/products";
-import TiltCard from "@/components/TiltCard";
+
 
 interface SubsectorPageProps {
   params: Promise<{ slug: string; subsector: string }>;
