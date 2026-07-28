@@ -180,9 +180,10 @@ export function HeroCarousel() {
               animate="visible"
               exit="exit"
               variants={containerVariants}
-              className="max-w-xl"
+              className="w-full max-w-4xl"
+              style={{ wordWrap: 'break-word', wordBreak: 'break-word', overflowWrap: 'break-word' }}
             >
-              <p className={`text-lg md:text-xl lg:text-2xl font-semibold leading-snug drop-shadow-lg ${slideContent[currentIndex].textColor}`}>
+              <p className={`text-base md:text-lg lg:text-xl font-semibold leading-snug drop-shadow-lg ${slideContent[currentIndex].textColor}`}>
                 {slideContent[currentIndex].tagline.split('').map((char, i) => (
                   <motion.span
                     key={i}
@@ -200,28 +201,7 @@ export function HeroCarousel() {
         </AnimatePresence>
       </div>
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-colors"
-        aria-label="Previous slide"
-      >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-colors"
-        aria-label="Next slide"
-      >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* Dots */}
+      {/* Dots Navigation */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {images.map((_, index) => (
           <button
