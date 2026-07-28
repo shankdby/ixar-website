@@ -24,261 +24,371 @@ export const caseStudies: CaseStudy[] = [
     client: "Reliance Industries Limited (RIL)",
     industry: "Energy",
     application: "Cooling Tower Sump Inspection",
-    technology: "Underwater ROV",
+    technology: "Submersible ROV",
     duration: "2 Months",
-    challenge: "Cooling tower sumps are confined underwater environments where conventional inspection methods often involve significant safety risks and operational challenges. Draining the sumps for inspections causes massive refinery downtime, costing millions in lost production daily, while manual diver entry is highly hazardous due to chemical presence, restricted access, and active suction pipelines.",
-    solution: "IXAR Robotic Solutions successfully bypassed these challenges by deploying an advanced Underwater ROV. The robotic approach eliminated direct personnel exposure to hazardous confined spaces while delivering accurate inspection data to support maintenance planning and asset integrity management without draining a single sump or interrupting plant operations.",
-    methodology: "The ROV was deployed through the existing manway, enabling rapid and safe access to submerged confined spaces while eliminating the need for diver intervention. A contingency plan for emergency retrieval was implemented throughout the project to ensure operational safety. The inspection included high-resolution visual assessment, geotagged video recording, defect identification, defect measurement, and comprehensive condition assessment of the inspected assets.",
+    challenge: "Cooling tower sumps are confined underwater environments where conventional inspection methods often involve significant safety risks and operational challenges. Draining sumps causes massive refinery downtime costing millions, while manual diver entry is hazardous due to chemical presence and active suction.",
+    solution: "IXAR Robotic Solutions deployed advanced Underwater ROVs to inspect 20+ cooling tower sumps without draining liquid or halting plant operations, eliminating diver risk and saving millions in downtime.",
+    methodology: "ROVs were deployed through narrow access manways, logging 1080p geotagged video of concrete bases, support pillars, and pipe joints while using laser scalers to measure concrete scour and steel flange corrosion.",
     robotUsed: "ROV Genesis / Titan",
     workflow: [
-      "Safety briefing, hazard containment checks, and emergency retrieval rigging setup.",
-      "Deployment of the ROV Genesis through the cooling tower sump's narrow manway access point.",
-      "Real-time visual monitoring and video logging of the concrete base, support pillars, and pipe joints.",
-      "Laser-scaler measurements of concrete scour depth and steel flange corrosion gaps.",
-      "Systematic mapping of sediment accumulation areas across the sump floor.",
-      "Final data processing and delivery of a detailed structural integrity report with engineering observations."
+      "Safety briefing and hazard containment checks.",
+      "Deployment through narrow manway access point.",
+      "Real-time visual monitoring of base, support pillars, and pipe joints.",
+      "Laser-scaler measurement of concrete scour and flange gap corrosion.",
+      "Delivery of detailed structural integrity audit report."
     ],
-    results: "Completed the inspection of more than 20 cooling tower sumps over a period of two months. Avoided refinery shut-downs, saving millions in operational costs. Provided high-resolution geotagged video logs mapping all concrete cracks and piping corrosion, allowing targeted repair patching during scheduled maintenance.",
+    results: "Successfully audited 20+ sumps with 0 hours of refinery downtime, delivering high-resolution video mapping all concrete cracks and pipe corrosion for targeted maintenance.",
     metrics: [
       { label: "Sumps Inspected", value: "20+" },
       { label: "Refinery Downtime", value: "0 Hours" },
       { label: "Diver Risk Removed", value: "100%" },
       { label: "Inspection Accuracy", value: "99.2%" }
     ],
-    image: "/media/Piles Inspection.jpg",
+    image: "/images/case-studies/cs1.png",
     gallery: [
-      "/media/Piles Inspection.jpg",
-      "/media/PSP Inspection.jpg",
-      "/media/ROV M2 Underwater Crack.png",
-      "/media/Best Pic.png"
+      "/images/case-studies/cs1.png",
+      "/media/Piles Inspection.jpg"
     ]
   },
   {
     slug: "water-storage-tank-inspection",
-    title: "Potable Water Storage Tank Inspection",
+    title: "Water Storage Tank Inspection",
     client: "Municipal Water Utility Corporation",
     industry: "Infrastructure",
-    application: "Water Utility Inspection",
-    technology: "Compact Underwater ROV",
+    application: "Water Utility Tank Inspection",
+    technology: "Sanitized Compact ROV",
     duration: "3 Weeks",
-    challenge: "Drinking water storage reservoirs require strict periodic audits to verify wall seals and check sediment levels. Draining these tanks disrupts city water supplies, wastes millions of gallons of water, and creates vacuum pressure risks on tank walls. Sending human divers inside risks contaminating drinking water with pathogens.",
-    solution: "IXAR deployed the compact, battery-powered ROV Volt. The ROV was completely disinfected using food-grade sanitizing solutions, allowing it to complete visual scans of internal columns and floor sediments while the tanks remained full and online, ensuring zero disruption to city supply lines.",
-    methodology: "The sanitized ROV Volt was lowered through the reservoir's overhead access hatch. Using auto-heading and auto-depth control, it completed a horizontal and vertical grid sweep of all structural joints and columns. Optical camera sensors logged concrete health and verified that no external groundwater was seeping in.",
+    challenge: "Drinking water reservoirs require periodic structural audits. Draining tanks disrupts municipal supply lines and wastes millions of gallons of treated water, while diver entry risks drinking water contamination.",
+    solution: "Deployed food-grade sanitized ROV Volt to conduct full interior wall, joint seal, and floor sediment scans while reservoirs remained online and full.",
+    methodology: "Lowered sanitized ROV Volt through top access hatches. Autodepth and autoheading controls executed systematic grid sweeps of columns and base seals.",
     robotUsed: "ROV Volt",
     workflow: [
-      "Chemical sterilization of the ROV Volt to potable water sanitation standards.",
-      "Hatch deployment with fine, lightweight neutrally buoyant umbilical tethers.",
-      "Grid sweep of concrete storage base and floor joint seals.",
-      "Visual mapping of support pillar erosion and wall cracks.",
-      "Potable water compliance audit reporting and video handover."
+      "Chemical sterilization of ROV Volt to potable water standards.",
+      "Hatch lowering with neutrally buoyant tethers.",
+      "Grid sweep of base seals, joint liners, and wall columns.",
+      "Potable compliance audit reporting."
     ],
-    results: "Audited four large municipal drinking reservoirs. Inspected all joint seals and column bases. Confirmed seal integrity, mapped sediment depths, and avoided the discharge of 12 million gallons of treated drinking water.",
+    results: "Audited 4 large municipal drinking water reservoirs, saving 12M gallons of water and eliminating public supply disruption.",
     metrics: [
       { label: "Water Saved", value: "12M Gallons" },
       { label: "Tanks Audited", value: "4 Reservoirs" },
-      { label: "Deployment Prep", value: "<15 Mins" },
+      { label: "Downtime", value: "0 Hours" },
       { label: "Sanitation Standard", value: "Potable Safe" }
     ],
-    image: "/media/Water Utility.jpg",
+    image: "/images/case-studies/cs2.jpg",
     gallery: [
-      "/media/Water Utility.jpg",
-      "/media/Tank Inspection.jpg",
-      "/media/IMG-20251217-WA0088.jpg"
+      "/images/case-studies/cs2.jpg",
+      "/media/Tank Inspection.jpg"
     ]
   },
   {
     slug: "bridge-piles-inspection",
-    title: "Bridge Pier & Pile Structural Integrity Survey",
-    client: "National Highway Authority",
+    title: "Bridge Piles Inspection",
+    client: "National Highway & Infrastructure Authority",
     industry: "Infrastructure",
-    application: "Bridge Pile Inspection",
+    application: "Bridge Pile Structural Audit",
     technology: "Sonar-Enabled Underwater ROV",
     duration: "1 Month",
-    challenge: "Bridge foundations are subject to intense river currents, scouring, and corrosion. Visual inspections by divers are difficult or impossible in mud-heavy waters, and swift currents make manual diving hazardous. Scour damage must be caught early to prevent structural bridge failures.",
-    solution: "IXAR deployed the ROV Vector, using its high-thrust propulsion system to remain stable in currents up to 2.5 knots. Equipped with a dual-frequency scanning sonar and optical cameras, the ROV mapped scouring around bridge piers and performed high-resolution visual scans of concrete piles.",
-    methodology: "The ROV Vector ran pre-programmed circular grid sweeps around each bridge pier. The sonar generated 3D profiling data of the riverbed scour holes, while the HD cameras logged reinforcement exposure and cracks, measured using integrated laser scalers.",
+    challenge: "Bridge pile foundations undergo intense river currents and underwater scour. Mud-heavy waters render visual diver checks ineffective, and swift currents endanger human divers.",
+    solution: "Deployed high-thrust ROV Vector equipped with dual-frequency scanning sonar and optical cameras to map riverbed scour holes and structural pile cracks.",
+    methodology: "Executed automated circular grid sweeps around 12 main bridge piers. Sonar generated 3D profiling maps of scour holes while HD cameras logged rebar exposure.",
     robotUsed: "ROV Vector",
     workflow: [
-      "Current mapping and ROV thruster calibration for river currents.",
-      "Deployment of the ROV Vector from a utility boat near bridge piers.",
-      "Sonar sweeps to capture a 3D map of the riverbed scour hole.",
-      "Visual scanning of exposed piles, noting crack coordinates.",
-      "Concrete thickness and reinforcement corrosion logging.",
-      "Generation of an engineering scour and pile stability map."
+      "Current calibration for 2.5-knot river flow.",
+      "Boat deployment near bridge piers.",
+      "Sonar 3D scour hole profiling sweep.",
+      "Visual crack and rebar corrosion mapping with laser scalers."
     ],
-    results: "Completed integrity mapping for 12 main bridge support piers. Identified structural scouring on three piers and concrete crack propagation on one pier. Provided exact millimeter measurements of the defects, enabling highway engineers to execute targeted grout reinforcement.",
+    results: "Mapped 12 main bridge piers, pinpointed scour damage on 3 piers, and enabled precise grout reinforcement without traffic disruption.",
     metrics: [
       { label: "Piers Inspected", value: "12 Foundations" },
-      { label: "Max Flow Handled", value: "2.5 Knots" },
-      { label: "Laser Sizing Accuracy", value: "±0.5 mm" },
-      { label: "Bridge Downtime", value: "0 Hours" }
+      { label: "Max Current Handled", value: "2.5 Knots" },
+      { label: "Laser Precision", value: "±0.5 mm" },
+      { label: "Traffic Downtime", value: "0 Hours" }
     ],
-    image: "/media/Bridge.jpg",
+    image: "/images/case-studies/cs3.jpg",
     gallery: [
-      "/media/Bridge.jpg",
-      "/media/Piles Inspection.jpg",
-      "/media/ROV Port.png"
+      "/images/case-studies/cs3.jpg",
+      "/media/Bridge.jpg"
     ]
   },
   {
     slug: "jetty-piles-inspection",
-    title: "Port Jetty Pile Splash-Zone Corrosion Survey",
+    title: "Jetty Piles Inspection",
     client: "State Port Terminal Authority",
     industry: "Maritime",
-    application: "Jetty Structure Inspection",
-    technology: "Heavy-Duty ROV & UT NDT",
+    application: "Jetty Pile Corrosion Survey",
+    technology: "Heavy ROV & Ultrasonic Thickness (UT)",
     duration: "1.5 Months",
-    challenge: "Jetty piles are continuously subjected to tidal wave action, leading to accelerated splash-zone corrosion. High biofouling layers (barnacles and algae) conceal structural thinning. Heavy harbor shipping traffic prevents the use of diving crews due to propeller suction risks.",
-    solution: "IXAR deployed the heavy-duty ROV Titan equipped with a subsea cleaning brush and an Ultrasonic Thickness (UT) probe. The ROV cleared marine growth from steel piles and measured steel thickness, operating safely near berths without halting port traffic.",
-    methodology: "The ROV Titan was held in place using automated positioning. The cleaning brush cleared biofouling on selected areas, and the UT probe was pressed against the pile to take steel thickness readings. The data was streamed to a surface console to map corrosion rates.",
+    challenge: "Port jetty piles experience severe splash-zone marine growth and tidal corrosion. Propeller suction from harbor ships prevents human diver entry.",
+    solution: "Deployed heavy-duty ROV Titan equipped with subsea rotary cleaning brushes and Ultrasonic Thickness (UT) probes to measure steel wall thickness without halting harbor traffic.",
+    methodology: "ROV Titan cleared biofouling on selected inspection points and pressed UT sensors against steel piles to stream real-time wall thickness logs.",
     robotUsed: "ROV Titan",
     workflow: [
-      "ROV launch from jetty deck using a portable crane arm.",
-      "Dock alignment and auto-positioning lock on steel piles.",
-      "Removal of biofouling on test zones using rotary brush attachments.",
-      "Pressing the UT probe to record remaining steel plate thickness.",
-      "Data logging of thickness measurements across submerged and splash zones.",
-      "Delivery of a pile corrosion-rate map to port engineering teams."
+      "Crane launch from jetty deck.",
+      "Auto-positioning lock on steel piles.",
+      "Rotary brush biofouling removal.",
+      "UT probe thickness logging across splash and submerged zones."
     ],
-    results: "Inspected 80 steel piles. Successfully mapped structural thinning rates across the harbor jetty. Found five critical piles with more than 35% thickness loss, allowing the port authority to install targeted cathodic protection sleeves.",
+    results: "Inspected 80 steel jetty piles, identified 5 critical piles with >35% thickness loss, and enabled targeted cathodic sleeve installation.",
     metrics: [
-      { label: "Piles Inspected", value: "80 Steel Piles" },
-      { label: "Thickness Logged", value: "320 Points" },
-      { label: "Port Disruption", value: "None" },
-      { label: "Cost Saving", value: "45% vs Divers" }
+      { label: "Piles Inspected", value: "80 Piles" },
+      { label: "Thickness Points", value: "320 Points" },
+      { label: "Port Disruption", value: "0 Hours" },
+      { label: "Cost Savings", value: "45%" }
     ],
-    image: "/media/PSP Inspection.jpg",
+    image: "/images/case-studies/cs4.jpg",
     gallery: [
-      "/media/PSP Inspection.jpg",
-      "/media/ROV underwater M2.png"
+      "/images/case-studies/cs4.jpg",
+      "/media/PSP Inspection.jpg"
     ]
   },
   {
-    slug: "etp-facility-inspection",
-    title: "Chemical Effluent Treatment Plant Sump Audit",
-    client: "Chemical Manufacturing Plant",
-    industry: "Infrastructure",
-    application: "ETP Inspection",
-    technology: "Chemical-Safe ROV",
-    duration: "2 Weeks",
-    challenge: "Effluent Treatment Plant (ETP) sumps hold hazardous chemicals, heavy acids, and toxic industrial sludge. Traditional inspections require draining chemical sumps, which shuts down manufacturing pipelines and generates hazardous liquid storage issues. Diver entry is prohibited due to life-threatening chemical exposure risks.",
-    solution: "Deployed the chemical-resistant ROV Genesis to perform a complete visual check of ETP sump liners and pipes while the plant remained active. The ROV's external hull, seals, and tethers were retrofitted with chemically inert materials to withstand acid exposure.",
-    methodology: "Lowered through an access hatch into active ETP neutralization sumps. The ROV Genesis checked concrete liner coatings for chemical degradation and checked pipes for joint leakage. Real-time visual feeds were logged at the surface control unit.",
-    robotUsed: "ROV Genesis",
+    slug: "eddy-current-test-underwater",
+    title: "Eddy Current Test Underwater",
+    client: "Subsea Offshore Energy Operator",
+    industry: "Energy",
+    application: "Subsea NDT & Weld Inspection",
+    technology: "ROV-Mounted Eddy Current Testing (ECT)",
+    duration: "3 Weeks",
+    challenge: "Subsea weld joint inspection on offshore platforms requires detecting micro-cracks beneath painted or corroded coatings without scraping off protective coatings.",
+    solution: "Fitted ROV Genesis with multi-element Eddy Current Testing (ECT) arrays to scan submerged platform node welds through surface paint and marine growth.",
+    methodology: "The ROV maintained magnetic chassis attachment along structural welds while sweeping ECT probes over joint geometries to stream electromagnetic defect signals.",
+    robotUsed: "ROV Genesis / Vector",
     workflow: [
-      "ROV pre-deployment chemical seal checks and tether wrapping.",
-      "Access hatch lowering into the active chemical neutralization sump.",
-      "Inspecting wall coatings for acid erosion and concrete spalling.",
-      "Visual examination of submerged pipe joints for active leakage.",
-      "Decontamination wash of the ROV and cable after retrieval."
+      "ECT probe calibration on sample weld flaws.",
+      "ROV deployment to subsea platform node joint.",
+      "Electromagnetic scanning of node welds through protective paint.",
+      "Defect depth mapping and real-time NDT signal recording."
     ],
-    results: "Inspected three active ETP sumps. Identified localized concrete liner erosion in one neutralizing tank. Allowed the manufacturer to schedule localized patch repairs during regular plant maintenance, avoiding unplanned shutdowns.",
+    results: "Scanned 24 critical structural welds, detected 2 sub-surface fatigue cracks before structural failure, and eliminated expensive surface paint scraping.",
     metrics: [
-      { label: "Sumps Audited", value: "3 Active Sumps" },
-      { label: "Manufacturing Uptime", value: "100%" },
-      { label: "Exposure Incidents", value: "Zero" },
-      { label: "Decon Time", value: "1 Hour" }
+      { label: "Welds Scanned", value: "24 Nodes" },
+      { label: "Coating Removal", value: "Not Required" },
+      { label: "Crack Sensitivity", value: "0.2 mm" },
+      { label: "NDT Precision", value: "High Grade" }
     ],
-    image: "/media/Dam.jpg",
+    image: "/images/case-studies/cs5.png",
     gallery: [
-      "/media/Dam.jpg",
+      "/images/case-studies/cs5.png",
+      "/media/ROV M2 Underwater Crack.png"
+    ]
+  },
+  {
+    slug: "psp-inspection",
+    title: "PSP Inspection",
+    client: "Hydro Power Generation Corporation",
+    industry: "Energy",
+    application: "Pumped Storage Project Audit",
+    technology: "Deep Depth ROV",
+    duration: "1 Month",
+    challenge: "Pumped Storage Projects (PSP) have deep water shafts, high pressure intake tunnels, and concrete penstocks operating under extreme hydraulic heads inaccessible to human divers.",
+    solution: "Deployed deep-rated ROV Volt with high-intensity LED illuminators and sonar to inspect intake gates, shaft concrete lining, and penstock valve seals.",
+    methodology: "The ROV navigated down 150m vertical intake shafts using fiber-optic tethers to stream HD video and sonar geometry of penstock liners.",
+    robotUsed: "ROV Volt / Vector",
+    workflow: [
+      "Vertical shaft tether rigging and ROV deployment.",
+      "150m depth descent into intake shaft.",
+      "High-intensity visual scan of penstock concrete joints.",
+      "Intake gate seal and stoplog seating inspection."
+    ],
+    results: "Completed structural inspection of upper/lower PSP reservoirs and penstocks, confirming gate seal integrity and catching concrete cavitation early.",
+    metrics: [
+      { label: "Depth Reached", value: "150 Meters" },
+      { label: "Shafts Scanned", value: "2 PSP Shafts" },
+      { label: "Plant Downtime", value: "Zero" },
+      { label: "Safety Rating", value: "100%" }
+    ],
+    image: "/images/case-studies/cs6.jpg",
+    gallery: [
+      "/images/case-studies/cs6.jpg",
       "/media/Hydro Dam.jpg"
     ]
   },
   {
-    slug: "tank-inspection-using-crawler",
-    title: "Refinery Fuel Storage Tank Thickness Mapping",
-    client: "Petrochemical Refinery",
-    industry: "Energy",
-    application: "Tank Inspection",
-    technology: "Magnetic Crawler NDT",
+    slug: "bridge-piles-structural-survey",
+    title: "Bridge Piles Structural Survey",
+    client: "Public Works & Coastal Department",
+    industry: "Infrastructure",
+    application: "Coastal Bridge Foundation Audit",
+    technology: "Submersible ROV & Sonar",
     duration: "3 Weeks",
-    challenge: "Storage tank inspections require scaffolding, grit blasting, and manual ultrasonic thickness measurements. This requires months of downtime, high costs, and fall risks for climbing crews.",
-    solution: "IXAR's Magnetic Crawler climbed the tank walls and dome, taking continuous ultrasonic thickness (UT) measurements through paint layers without scaffolding.",
-    methodology: "The crawler was loaded with permanent magnets and driven in vertical strips, capturing thickness data every 10cm and sending real-time logs to the operator.",
+    challenge: "Coastal highway bridges face high salinity, tidal currents, and marine growth that erode pile caps and underwater concrete supports.",
+    solution: "Deployed ROV Vector to perform comprehensive structural condition assessments and sonar seabed mapping around coastal bridge foundations.",
+    methodology: "ROV Vector conducted systematic vertical wall crawls and sonar sweeps of 16 coastal bridge piles, measuring biofouling thickness and rebar corrosion.",
+    robotUsed: "ROV Vector",
+    workflow: [
+      "Tidal window planning and boat deployment.",
+      "Sonar mapping of seabed foundation profile.",
+      "Visual scan of underwater pile caps and splash-zone joints.",
+      "Delivery of concrete integrity and rebar exposure logs."
+    ],
+    results: "Audited 16 coastal pile foundations, mapped concrete erosion rates, and provided public works engineers with exact repair coordinates.",
+    metrics: [
+      { label: "Piles Scanned", value: "16 Foundations" },
+      { label: "Resolution", value: "1080p HD" },
+      { label: "Bridge Downtime", value: "0 Hours" },
+      { label: "Data Accuracy", value: "98.5%" }
+    ],
+    image: "/images/case-studies/cs7.jpg",
+    gallery: [
+      "/images/case-studies/cs7.jpg",
+      "/media/Bridge.jpg"
+    ]
+  },
+  {
+    slug: "etp-facility-inspected-using-rov",
+    title: "ETP Facility Inspected Using ROV",
+    client: "Industrial Chemical Complex",
+    industry: "Infrastructure",
+    application: "Hazardous ETP Sump Audit",
+    technology: "Chemical-Resistant ROV",
+    duration: "2 Weeks",
+    challenge: "Effluent Treatment Plants (ETP) contain corrosive acids, toxic industrial sludge, and hazardous chemical sumps where human diving is strictly prohibited.",
+    solution: "Deployed chemically retrofitted ROV Genesis into active ETP neutralization sumps, inspecting wall liners and submerged pipes without draining chemical liquids.",
+    methodology: "The ROV entered through access manholes, using chemically inert seals and tethers to log concrete liner corrosion and joint leakage.",
+    robotUsed: "ROV Genesis",
+    workflow: [
+      "Chemical seal prep and ROV tether shielding.",
+      "Lowering into active neutralization sump.",
+      "Inspecting acid-resistant floor liners and wall joints.",
+      "ROV chemical wash and decontamination upon retrieval."
+    ],
+    results: "Inspected 3 active chemical sumps with zero plant downtime, identifying localized liner erosion for targeted patching during scheduled maintenance.",
+    metrics: [
+      { label: "Sumps Audited", value: "3 Chemical Sumps" },
+      { label: "Plant Downtime", value: "0 Hours" },
+      { label: "Diver Risk", value: "Zero" },
+      { label: "Decon Time", value: "1 Hour" }
+    ],
+    image: "/images/case-studies/cs8.jpg",
+    gallery: [
+      "/images/case-studies/cs8.jpg",
+      "/media/Dam.jpg"
+    ]
+  },
+  {
+    slug: "tank-inspection-using-crawler",
+    title: "Tank Inspection Using Crawler",
+    client: "Petrochemical Storage Terminal",
+    industry: "Energy",
+    application: "Refinery Fuel Tank UT Inspection",
+    technology: "Vertical Magnetic Crawler NDT",
+    duration: "3 Weeks",
+    challenge: "Inspecting massive fuel storage tanks requires building scaffolding, removing protective coatings, and sending climbing crews to dangerous heights.",
+    solution: "Deployed IXAR's Magnetic Crawler to climb vertical steel walls and dome plates, taking continuous Ultrasonic Thickness (UT) measurements through paint layers.",
+    methodology: "High-adhesion magnetic wheels drove the crawler in vertical strips, capturing steel thickness every 10cm and streaming live NDT heatmaps.",
     robotUsed: "IXAR Magnetic Crawler",
     workflow: [
-      "Rigging safety tethers to the tank's roof-hatch handrails.",
-      "Deploying the crawler onto the steel wall shell, confirming magnetic hold.",
-      "Automated vertical strip climbing and thickness scanning.",
-      "Capturing UT wall thickness measurements through paint layers.",
-      "Analyzing the weld lines for corrosion cracks."
+      "Surface magnetic latching and safety line attachment.",
+      "Vertical wall climbing strip execution.",
+      "Continuous UT thickness measurement through paint.",
+      "Real-time plate corrosion heatmap generation."
     ],
-    results: "Mapped thickness profiles for 6 crude storage tanks. Identified structural thinning areas near the liquid-vapor line. Reduced tank downtime by 80% and removed all scaffolding costs.",
+    results: "Mapped 4 fuel storage tanks without scaffolding or grit blasting, saving 60% in setup costs and eliminating worker height hazards.",
     metrics: [
-      { label: "Tanks Mapped", value: "6 Fuel Tanks" },
+      { label: "Tanks Scanned", value: "4 Fuel Tanks" },
       { label: "Scaffolding Saved", value: "100%" },
-      { label: "Downtime Reduced", value: "82%" },
-      { label: "UT Scan Resolution", value: "Every 10 cm" }
+      { label: "UT Points", value: "1,200+ Logs" },
+      { label: "Cost Reduction", value: "60%" }
     ],
-    image: "/media/Tank Inspection.jpg",
+    image: "/images/case-studies/cs9.jpg",
     gallery: [
-      "/media/Tank Inspection.jpg",
-      "/media/ROV M2 Underwater Crack.png"
+      "/images/case-studies/cs9.jpg",
+      "/media/Tank Inspection.jpg"
     ]
   },
   {
-    slug: "port-infrastructure-survey",
-    title: "Deep-water Port Quay Wall & Berth Structural Survey",
-    client: "International Gateway Terminal",
+    slug: "ganpati-visarjan-mumbai",
+    title: "Ganpati Visarjan Mumbai",
+    client: "Municipal Corporation & Police Department",
+    industry: "Search & Rescue",
+    application: "Public Safety & Subsea Surveillance",
+    technology: "Compact ROV & Live Feed",
+    duration: "1 Week",
+    challenge: "During Mumbai's annual Ganpati Visarjan festival, millions gather along crowded beaches for idol immersion, creating high risks of drowning and underwater hazards.",
+    solution: "Deployed ROVs along key beach immersion zones (Girgaon Chowpatty, Juhu) to provide real-time underwater video feeds and emergency search support.",
+    methodology: "ROV units monitored active immersion channels, scanning water floor areas for submerged obstacles, debris, and swimmer distress signals.",
+    robotUsed: "ROV Volt / Vector",
+    workflow: [
+      "Beach command station setup and ROV tether deployment.",
+      "Real-time subsea channel surveillance during peak immersion hours.",
+      "Immediate video relay to beach safety command units.",
+      "Post-immersion seabed clutter and hazard verification."
+    ],
+    results: "Provided continuous underwater safety monitoring across major Mumbai beach sites, ensuring zero subsea entrapment incidents during peak festival days.",
+    metrics: [
+      { label: "Beaches Covered", value: "Major Sites" },
+      { label: "Live Feed Uptime", value: "100%" },
+      { label: "Incident Rate", value: "Zero" },
+      { label: "Safety Rating", value: "High Priority" }
+    ],
+    image: "/images/case-studies/cs10.jpg",
+    gallery: [
+      "/images/case-studies/cs10.jpg",
+      "/media/Environmental Research & Rescue Applications.jpg"
+    ]
+  },
+  {
+    slug: "port-inspection",
+    title: "Port Inspection",
+    client: "Major Commercial Port Authority",
     industry: "Maritime",
-    application: "Port Survey",
-    technology: "ROV Sonar & Visual Mapping",
+    application: "Berth & Quay Wall Audit",
+    technology: "Multi-Sensor ROV",
     duration: "1 Month",
-    challenge: "Deep-water quay walls are subjected to high shipping impact forces and concrete erosion. Turbid ship-channel waters prevent visual checks, while divers cannot safely operate near active vessel props.",
-    solution: "Deployed ROV Vector and Titan in tandem, using Oculus scanning sonar to inspect walls and map berths, completely independent of port water visibility.",
-    methodology: "The ROV conducted sonar runs parallel to the wall, generating a 3D point cloud of the concrete structures, and checking steel reinforcement beams.",
-    robotUsed: "ROV Vector & Titan",
+    challenge: "Commercial port quay walls and shipping berths undergo constant wave impact and vessel berthing forces. Diver checks interrupt vessel cargo operations.",
+    solution: "Deployed multi-sensor ROVs to map concrete quay walls, dolphin piles, and berth foundations without stopping ship docking or container unloading.",
+    methodology: "The ROV executed horizontal wall traverses along berth faces, capturing 1080p video of concrete cracking, joint displacement, and fender pile wear.",
+    robotUsed: "ROV Titan / Genesis",
     workflow: [
-      "Setting up port radar tracking and safety zones.",
-      "Launching the ROV Vector from port survey vessels.",
-      "Sonar profiling of quay walls to detect concrete spalling.",
-      "Visual inspection of fender brackets and tie-rod assemblies.",
-      "Processing sonar point clouds into 3D structural models."
+      "Harbor master coordination and ROV dockside launch.",
+      "Horizontal traverse along quay wall concrete caissons.",
+      "Fender panel bracket and pile joint inspection.",
+      "Comprehensive structural condition report generation."
     ],
-    results: "Mapped 1200 meters of concrete quay wall. Identified fender mount deterioration and structural concrete cracking, enabling port authorities to organize maintenance without stopping vessel loading.",
+    results: "Inspected 1.2 kilometers of commercial quay walls, identified 4 damaged fender brackets, and enabled scheduled berth maintenance with zero vessel delays.",
     metrics: [
-      { label: "Quay Wall Mapped", value: "1,200 Meters" },
-      { label: "Berth Operations", value: "No Interruption" },
-      { label: "Sonar Precision", value: "±2.0 cm" },
-      { label: "3D Model Generated", value: "Yes" }
+      { label: "Quay Wall", value: "1.2 km Scanned" },
+      { label: "Vessel Delays", value: "0 Mins" },
+      { label: "Defects Mapped", value: "4 Brackets" },
+      { label: "Report Turnaround", value: "48 Hours" }
     ],
-    image: "/media/ROV Port.png",
+    image: "/images/case-studies/cs11.jpg",
     gallery: [
-      "/media/ROV Port.png",
-      "/media/Ship Inspection.jpg"
+      "/images/case-studies/cs11.jpg",
+      "/media/ROV Port.png"
     ]
   },
   {
-    slug: "eddy-current-testing-underwater",
-    title: "Subsea Weld Crack Detection via Underwater ECT",
-    client: "Offshore Gas Terminal Operator",
+    slug: "jetty-inspected-using-rov",
+    title: "Jetty Inspected Using ROV",
+    client: "Offshore Oil Terminal",
     industry: "Maritime",
-    application: "Weld Inspection",
-    technology: "ROV with ECT NDT Kit",
+    application: "Subsea Jetty & Pipeline Landing Survey",
+    technology: "Submersible ROV & Sonar",
     duration: "3 Weeks",
-    challenge: "Underwater structural welds suffer from fatigue cracking. Standard visual checks cannot find subsurface weld defects. Diver-based NDT requires scraping welds clean, which is slow and costly in deep water.",
-    solution: "Deployed the ROV Titan with an Eddy Current Testing (ECT) probe. This allowed the team to scan subsea welds through paint and light marine growth, avoiding weld cleaning.",
-    methodology: "The ROV Titan locked itself in place next to weld joins. The custom ECT probe tracked along the weld profile, recording real-time electrical current anomalies and streaming them to the surface NDT engineer.",
-    robotUsed: "ROV Titan with ECT Probe",
+    challenge: "Offshore tanker loading jetties and subsea pipeline landings operate in deep open water where strong waves make diver inspections extremely dangerous.",
+    solution: "Deployed ROV Vector from terminal support vessels to inspect submerged steel piles, pipeline risers, and ocean floor mattress protection.",
+    methodology: "ROV Vector performed vertical pile inspections and tracked subsea pipeline landings using high-resolution video and profiling sonar.",
+    robotUsed: "ROV Vector / Titan",
     workflow: [
-      "ROV calibration with NDT standard weld test plates.",
-      "Submerging the ROV Titan to structural bracing joints.",
-      "Locking position using automated thruster hold.",
-      "Scanning weld seams with the ECT probe.",
-      "Analyzing electrical signal feedback on the surface console."
+      "Terminal vessel deployment and positioning lock.",
+      "Subsea pipeline riser visual and thickness check.",
+      "Offshore jetty pile foundation scour assessment.",
+      "Digital engineering audit submission."
     ],
-    results: "Scanned 42 structural weld joints. Detected two subsurface fatigue cracks before they reached the surface, allowing port engineers to plan grout sleeves before failure.",
+    results: "Completed full underwater inspection of oil terminal loading jetty, verifying pipeline riser integrity and confirming foundation stability.",
     metrics: [
-      { label: "Welds Scanned", value: "42 Joints" },
-      { label: "Paint Removal", value: "0%" },
-      { label: "Subsurface Found", value: "2 Cracks" },
-      { label: "Diver Days Saved", value: "12 Days" }
+      { label: "Risers Scanned", value: "All Risers" },
+      { label: "Offshore Uptime", value: "100%" },
+      { label: "Safety Record", value: "Zero Incident" },
+      { label: "Depth Rating", value: "Deep Rated" }
     ],
-    image: "/media/Offshore Wind.jpg",
+    image: "/images/case-studies/cs12.jpg",
     gallery: [
-      "/media/Offshore Wind.jpg",
-      "/media/ROV M2 Underwater Crack.png"
+      "/images/case-studies/cs12.jpg",
+      "/media/PSP Inspection.jpg"
     ]
   }
 ];

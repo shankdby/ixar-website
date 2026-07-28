@@ -29,46 +29,48 @@ export default function CaseStudiesPage() {
               Case Studies
             </h1>
             <p className="text-slate-200 text-sm md:text-base leading-relaxed drop-shadow">
-              Real deployments. Real results. Explore our field operations across Energy, Infrastructure, Maritime, and Industrial sectors.
+              Real deployments. Real results. Explore our 12 certified field operations across Energy, Infrastructure, Maritime, and Rescue operations.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Case Studies Grid */}
-      <section className="py-24 max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* 12 Case Studies Grid - Photo & Title Cards */}
+      <section className="py-20 max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {caseStudies.map((cs) => (
             <Link
               key={cs.slug}
               href={`/case-studies/${cs.slug}`}
-              className="group bg-white rounded-2xl border border-sky-100 shadow-md hover:shadow-xl hover:border-amber-300 overflow-hidden flex flex-col transition-all duration-300"
+              className="group bg-white rounded-2xl border border-slate-300 shadow-md hover:shadow-2xl hover:border-cyan-400 p-5 flex flex-col justify-between transition-all duration-300 cursor-pointer"
             >
-              {/* Image */}
-              <div className="relative h-44 overflow-hidden">
+              {/* Photo */}
+              <div className="relative h-64 sm:h-72 w-full overflow-hidden rounded-xl bg-slate-100 border border-slate-200">
                 <img
                   src={cs.image}
                   alt={cs.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
-                {/* Industry badge */}
-                <span className="absolute top-3 left-3 z-20 text-[9px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-amber-500 text-white shadow">
+                {/* Industry Tag */}
+                <span className="absolute top-3 left-3 z-20 text-[10px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-md bg-slate-900/80 text-cyan-300 border border-cyan-400/40 backdrop-blur-md">
                   {cs.industry}
                 </span>
               </div>
 
-              {/* Content */}
-              <div className="p-5 flex flex-col flex-1 justify-between space-y-3">
-                <h3 className="font-heading font-bold text-slate-900 text-sm leading-snug group-hover:text-amber-700 transition-colors duration-200 line-clamp-2">
-                  {cs.title}
-                </h3>
-                <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                  <span className="text-[10px] font-mono text-slate-500">{cs.duration}</span>
-                  <span className="inline-flex items-center space-x-1 text-[10px] font-mono font-semibold text-cyan-600 uppercase hover:text-cyan-800 transition-colors">
-                    <span>Learn more</span>
-                    <ArrowRight className="h-2.5 w-2.5" />
-                  </span>
+              {/* Title & Learn More Button */}
+              <div className="pt-5 flex items-end justify-between gap-4">
+                <div className="space-y-1">
+                  <h3 className="font-heading font-bold text-slate-900 text-lg sm:text-xl leading-snug group-hover:text-cyan-600 transition-colors">
+                    {cs.title}
+                  </h3>
+                  <p className="text-xs text-slate-500 font-mono">
+                    Client: {cs.client}
+                  </p>
+                </div>
+
+                <div className="px-5 py-2.5 rounded-lg bg-cyan-600 group-hover:bg-cyan-500 text-white font-heading font-semibold text-xs uppercase tracking-wider shadow-md flex items-center space-x-1.5 flex-shrink-0 transition-all">
+                  <span>Learn more</span>
+                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </Link>

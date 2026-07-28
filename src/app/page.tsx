@@ -364,17 +364,6 @@ export default function Home() {
               Your browser does not support the video tag.
             </video>
 
-            {/* Subsea Telemetry Overlay HUD */}
-            <div className="absolute top-4 left-4 right-4 pointer-events-none flex justify-between font-mono text-[11px] text-cyan-300 drop-shadow-md bg-slate-950/70 backdrop-blur px-4 py-2 rounded-lg border border-cyan-500/30">
-              <span>Temperature: 30.1°C</span>
-              <span>2026-07-26 11:48:53</span>
-              <span>Depth: -0.4m</span>
-            </div>
-            <div className="absolute bottom-4 left-4 right-4 pointer-events-none flex justify-between font-mono text-[11px] text-cyan-300 drop-shadow-md bg-slate-950/70 backdrop-blur px-4 py-2 rounded-lg border border-cyan-500/30">
-              <span>Heading: 284°</span>
-              <span>Lat: 19.0760° N | Lon: 72.8777° E</span>
-              <span>Pitch: 0°</span>
-            </div>
           </div>
         </div>
       </section>
