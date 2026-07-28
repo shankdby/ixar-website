@@ -33,15 +33,27 @@ export default async function IndustryPage({ params }: IndustryPageProps) {
       {/* Background grid pattern */}
       <div className="absolute inset-0 grid-overlay opacity-10 pointer-events-none" />
 
-      {/* Hero Section */}
+      {/* Hero Section - Video for Energy, Image for others */}
       <section className="relative h-[55vh] flex items-center justify-center overflow-hidden border-b border-sky-200/70 pt-12 bg-gradient-to-b from-sky-900 via-sky-800 to-slate-50">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-sky-950/70 via-sky-900/50 to-slate-50 z-10" />
-          <img 
-            src={industry.heroImage} 
-            alt={industry.name} 
-            className="w-full h-full object-cover scale-102 opacity-45"
-          />
+          {industry.slug === "energy" ? (
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              className="w-full h-full object-cover opacity-45"
+            >
+              <source src="/media/Energy Video.mp4" type="video/mp4" />
+              <source src="/media/Record 1.mp4" type="video/mp4" />
+            </video>
+          ) : (
+            <img 
+              src={industry.heroImage} 
+              alt={industry.name} 
+              className="w-full h-full object-cover scale-102 opacity-45"
+            />
+          )}
         </div>
         <div className="max-w-5xl mx-auto px-6 relative z-20 text-center space-y-6">
           <Link 

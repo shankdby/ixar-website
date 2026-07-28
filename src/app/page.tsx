@@ -7,18 +7,9 @@ import { ArrowRight, ShieldCheck, CheckCircle, Award, Plug, Boxes, Wrench, Waves
 import { products } from "@/data/products";
 import { industries } from "@/data/industries";
 import { caseStudies } from "@/data/caseStudies";
+import { HeroCarousel } from "@/components/HeroCarousel";
 
-// Sub-sector application cards — using high-resolution media images
-const applicationCards = [
-  { name: "Oil & Gas",       image: "/media/Offshore & Energy Assets.jpg", href: "/industries/energy/oil-and-gas" },
-  { name: "Hydro Dam",       image: "/media/Hydro Dam.jpg", href: "/industries/energy/hydro-dam" },
-  { name: "Offshore Wind",   image: "/media/Offshore Wind.jpg", href: "/industries/energy/offshore-wind" },
-  { name: "Nuclear",         image: "/media/Nuclear.jpg", href: "/industries/energy/nuclear" },
-  { name: "Bridges",         image: "/media/Bridge.jpg", href: "/industries/infrastructure/bridge" },
-  { name: "Dams",            image: "/media/Dam.jpg", href: "/industries/infrastructure/dam" },
-  { name: "Shipping",        image: "/media/Ship Inspection.jpg", href: "/industries/maritime/shipping" },
-  { name: "Ports",           image: "/media/ROV Port.png", href: "/industries/maritime/ports" },
-];
+
 
 const clientLogos = [
   { name: "Reliance Industries", src: "/images/logos/logo_1.png", url: "https://www.ril.com" },
@@ -33,22 +24,6 @@ const clientLogos = [
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
-  const [activeCycleIndex, setActiveCycleIndex] = useState(0);
-
-  const taglines = [
-    "Engineering the Future of Underwater Inspection",
-    "Innovating Underwater Robotics for Safer Inspections",
-    "Making Complex Underwater Missions Simple",
-    "Advanced Robotics for Critical Underwater Operations"
-  ];
-
-  // Rotate hero taglines
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveCycleIndex((prev) => (prev + 1) % taglines.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, []);
 
   const stats = [
     { label: "Year Incorporated", value: "2020", prefix: "" },
@@ -62,60 +37,8 @@ export default function Home() {
       {/* Background Subtle Grid Pattern */}
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none" />
 
-      {/* Hero Section - Light Ocean Theme */}
-      <section className="relative h-[88vh] flex items-center justify-center overflow-hidden pt-12 bg-gradient-to-b from-sky-900 via-sky-800 to-slate-50">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-sky-950/70 via-sky-900/50 to-slate-50 z-10" />
-          <img 
-            src="/media/Best Pic.png" 
-            alt="Deep Sea Submersible ROV" 
-            className="w-full h-full object-cover object-center scale-105 opacity-45"
-          />
-          {/* Light Ambient Rays */}
-          <div className="absolute top-1/4 left-1/2 w-96 h-96 bg-cyan-400/20 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 animate-pulse" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 relative z-20 text-center space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-400/40 text-xs font-mono font-semibold tracking-wide text-cyan-300 uppercase shadow-lg shadow-cyan-950/50"
-          >
-            <Award className="h-4 w-4 text-cyan-400" />
-            <span>IIT Bombay & IIT Madras Alumni Startup</span>
-          </motion.div>
-
-          {/* Dynamic Heading */}
-          <div className="space-y-4 max-w-4xl mx-auto h-[120px] md:h-[160px] flex items-center justify-center">
-            <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight drop-shadow-md">
-              {taglines[activeCycleIndex]}
-            </h1>
-          </div>
-
-          <p className="text-slate-200 text-sm md:text-base max-w-2xl mx-auto leading-relaxed drop-shadow">
-            IXAR Robotic Solutions designs and builds world-class underwater ROVs and vertical magnetic crawlers from scratch. We replace human divers in hazardous zones, delivering premium inspections in less time with superior NDT data.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Link 
-              href="/contact"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-lg text-sm font-heading font-semibold uppercase tracking-wider bg-cyan-500 hover:bg-cyan-400 text-white border border-cyan-400 transition-all duration-300 shadow-lg shadow-cyan-600/30"
-            >
-              Get Inspection Quote
-            </Link>
-            <a 
-              href="#fleet"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-lg text-sm font-heading font-semibold uppercase tracking-wider bg-white/90 hover:bg-white text-sky-900 border border-sky-200 transition-all duration-300 shadow-md"
-            >
-              Explore Our Fleet
-            </a>
-          </div>
-        </div>
-
-        {/* Ocean Wave / Cyan Scan Accent */}
-        <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-cyan-500 via-sky-400 to-cyan-500 opacity-60 shadow-[0_0_12px_rgba(6,182,212,0.8)]" />
-      </section>
+      {/* Hero Section - Auto-Sliding Carousel */}
+      <HeroCarousel />
 
       {/* Statistics Section - Light Card Banner */}
       <section className="py-10 border-y border-sky-200/80 bg-white/90 shadow-sm backdrop-blur-sm">
@@ -444,51 +367,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Applications Sub-Sector Grid ─────────────────────────────────────── */}
-      <section className="py-24 border-t border-sky-200/70 bg-white">
-        <div className="max-w-7xl mx-auto px-6 space-y-12">
-          <div className="text-center space-y-3">
-            <span className="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-700 font-mono text-xs font-bold tracking-widest uppercase border border-cyan-200">
-              Applications
-            </span>
-            <h2 className="font-heading text-3xl font-bold text-slate-900 tracking-tight">Industries We Serve</h2>
-            <p className="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              Click any sector to explore how our robotic platforms are deployed across Energy, Infrastructure, and Maritime operations.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-            {applicationCards.map((card) => (
-              <Link
-                key={card.name}
-                href={card.href}
-                className="group relative rounded-xl overflow-hidden border border-sky-100 shadow-md hover:shadow-xl h-52 flex items-end cursor-pointer transition-all duration-300"
-              >
-                {/* Background image */}
-                <img
-                  src={card.image}
-                  alt={card.name}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
-                />
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/30 to-transparent" />
-                {/* Hover cyan border glow */}
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-cyan-400 rounded-xl transition-all duration-300" />
-                {/* Label */}
-                <div className="relative z-10 p-4 w-full">
-                  <span className="font-heading font-bold text-sm text-white group-hover:text-cyan-300 transition-colors duration-200">
-                    {card.name}
-                  </span>
-                  <div className="flex items-center space-x-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-[10px] font-mono text-cyan-300 uppercase">Explore</span>
-                    <ArrowRight className="h-3 w-3 text-cyan-300" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ─── Trusted By — Separate Moving Logos Ticker ──────────────────────────────── */}
       <section className="py-16 border-t border-sky-200/70 bg-gradient-to-b from-sky-50/60 to-white overflow-hidden">
